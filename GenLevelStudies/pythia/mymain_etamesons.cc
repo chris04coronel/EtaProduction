@@ -11,11 +11,11 @@
 // to use ROOT for histogramming.
 
 
-//CONOR: copied form mymain91
-//Now rewritten to use MyGenParticle as simple struct, not custom class
+// CONOR: copied form mymain91
+// Now rewritten to use MyGenParticle as simple struct, not custom class
 // CONOR: now does specifically eta/eta' meson studies
 // pass it: etameson.card
-
+// Cc:  will be used for anything Christian Coronel comments in. 
 
 // Stdlib header file for input and output.
 #include <iostream>
@@ -27,7 +27,7 @@
 
 // ROOT, for histogramming and trees
 #include "TH1.h"
-#include "TTree.h"
+#include "TTree.h" // Cc: This is added
 
 // ROOT, for interactive graphics.
 #include "TVirtualPad.h"
@@ -37,29 +37,32 @@
 #include "TFile.h"
 
 // my own GenParticle class
+// Chris: I don't why the below line is commented out
 //#include "MyGenParticle.h"
 //CONOR: struct version
 #include "MyGenParticleStruct.h"
 
+// Conor doesnt include "#include "Tfile.h"" which main91 has for saving files.
 using namespace Pythia8;
 
 int main(int argc, char* argv[]) {
 
   // Create the ROOT application environment.
-  //Conor: seemed like the line Tapp below was eating up the argv args!
+  // Conor: seemed like the line TApp below was eating up the argv args!
   // and it looks like things run okay wihout it ...
-  //TApplication theApp("hist", &argc, argv);
+  // TApplication theApp("hist", &argc, argv);
 
   // Create Pythia instance
   
   Pythia pythia;
 
   // read setup from external card file passed as arg
+  // Cc: not sure what lines 61-63 are suppose to do?
   cout << "argc = " <<argc <<endl;
   cout << argv[0] <<endl;
   cout << argv[1] <<endl;
 
-  
+  //how is this finding card from external card file?
   if (argc != 2) {
     cout << "Setup Pythia from external card file, to be passed as arg" <<endl;
     return -1;
@@ -138,13 +141,13 @@ int main(int argc, char* argv[]) {
   CH::InitMyGenParticleStruct(neutrino);
   
   
-  //  CH::MyGenParticleStruct selObj2;
+  // CH::MyGenParticleStruct selObj2;
   // I can adjust the split level to have different ways of storing the class objects in the branch
   // default level is 1
   // let me also try 0 ? This stores is *Object*
-  /// Note: split level is 4ht arg, so put buf size as 3rd
-  //  outTree->Branch("Obj1",&selObj1,32000,0);
-  //  outTree->Branch("Obj1",&selObj1);
+  // Note: split level is 4ht arg, so put buf size as 3rd
+  // outTree->Branch("Obj1",&selObj1,32000,0);
+  // outTree->Branch("Obj1",&selObj1);
   // outTree->Branch("Obj2",&selObj2);
 
   // struct version of Tree:
@@ -158,7 +161,7 @@ int main(int argc, char* argv[]) {
   
   outTree->Print();
   
-  /// COunters over all events
+  /// Counters over all events
   int nEtasWithAllFourDaughtersInAcc = 0;
   int nEtasWithAllFourDaughtersInAccAndTwoMuons500 = 0;
   int nEtasWithAllFourDaughtersInAccAndFourMuons250 = 0;

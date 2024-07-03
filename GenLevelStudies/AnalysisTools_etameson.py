@@ -170,12 +170,12 @@ def create_folder_path(folder_name, test_mode_flag):
 
     if test_mode_flag:
         folder_name = 'Test'
-    path = find_WW_path() + '/GenLevelStudies/Figures/' + folder_name
+    path = find_ETA_path() + '/GenLevelStudies/Figures/' + folder_name
     if not os.path.exists(path):
         os.mkdir(path)
     return(path)
 
-def find_WW_path():
+def find_ETA_path():
     ''' Finds the path to WWProduction the folder within the project.
 
     Finds the path to WWProduction the folder within the project.  Many paths
@@ -187,7 +187,7 @@ def find_WW_path():
     Returns:
     path (str): Path to WWProduciton folder.
     '''
-    # raise specific phrase in python that can force an error to occur. Closes program entirely.
+
     cwd_list = os.getcwd().split('/')
     WW_index = cwd_list.index('EtaProduction')
     path = '/'.join(cwd_list[:WW_index+1])
