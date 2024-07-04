@@ -44,14 +44,11 @@ evt_array = np.array([0], dtype=np.float32)
 
 
 targ_eta_array  = np.array([0]*12, dtype=np.float32)
-acc_eta_array = np.array([0]*12, dtype=np.float32)
-# targ_lep1_array = np.array([0]*12, dtype=np.float32)
-# targ_lep2_array = np.array([0]*12, dtype=np.float32)
-# targ_lep3_array = np.array([0]*12, dtype=np.float32)
-# targ_lep4_array = np.array([0]*12, dtype=np.float32)
-# all_lep_list    =[targ_lep1_array,targ_lep2_array,targ_lep3_array,targ_lep4_array]
-eta = np.array([0]*2, dtype=np.float32)
-muon = 0
+targ_eta_prime_array = np.array([0]*12, dtype=np.float32)
+eta = np.array([0]*2, dtype=np.int32)
+eta_prime = np.array([0]*2, dtype=np.int32)
+eta_muons = np.array([0]*1, dtype=np.int32)
+eta_prime_muons = np.array([0]*1, dtype=np.int32)
 # Set up ROOT
 file = ROOT.TFile.Open(eta_path + "/GenLevelStudies/pythia/" + ofile_name,
                        "RECREATE")
@@ -59,29 +56,37 @@ file = ROOT.TFile.Open(eta_path + "/GenLevelStudies/pythia/" + ofile_name,
 
 tree = ROOT.TTree("Tree", "Tree")
 tree.Branch('Event', evt_array, 'Event/I') # Only has 1 leaf
-tree.Branch('Eta', targ_eta_array, var_str)
-#tree.Branch('EtaInAcc', acc_eta_array, var_str)
-tree.Branch('EtaPerEvent', eta, 'TotalEtaPerEvent/I:TotalEtaAccPerEvent/I')
-tree.Branch('MuonsAccPerEvent', muon,'MuonsAccPerEvent/I')
-
-
-# tree.Branch('TargetLepton1', targ_lep1_array, var_str) 
-# tree.Branch('TargetLepton2', targ_lep2_array, var_str)
-# tree.Branch('TargetLepton3', targ_lep3_array, var_str)
-# tree.Branch('TargetLepton4', targ_lep4_array, var_str)
-
+tree.Branch('Eta_Kin', targ_eta_array, var_str)
+tree.Branch('Eta_Prime_Kin', targ_eta_prime_array, var_str)
+tree.Branch('EtaPerEvent', eta, 'TEPE/I:TEAPE/I')
+tree.Branch('EtaPrimePerEvent', eta_prime, 'TEPPE/I:TEPAPE/I')
+tree.Branch('EtaMuons', eta_muons, 'EtaMuonsAcc/I')
+tree.Branch('EtaPrimeMuons', eta_prime_muons, 'EtaPrimeMuonsAcc')
+# Total counters
+total_eta = 0
+total_eta_acc = 0
+total_eta_prime = 0
+total_eta_prime_acc = 0
+total_eta_muons = 0 
+total_eta_prime_muons = 0 
 # Entering Event Loop
 for iEvent in range(nEvent):
-    eta[0]=0
-    eta[1]=0
-    muon = 0
+    eta[0] = 0
+    eta[1] = 0
+    eta_prime[0] = 0
+    eta_prime[1] = 0
+    eta_muons[0] = 0
+    eta_prime_muons[0] = 0
     if not pythia.next():
         continue
     evt_array[:] = iEvent 
     # ^Standard way to fill root arrays in python. Not very pythonic. 
     # Create empty list 
     targ_eta_list = []
-    targ_particle_list = []
+    targ_eta_particle_list = []
+    targ_eta_prime_list = []
+    targ_eta_prime_particle_list = []
+
     targ_lep_list = []
     targ_lep_particle = []
 
@@ -90,27 +95,67 @@ for iEvent in range(nEvent):
     for index, particle in enumerate(pythia.event):
         if particle.idAbs() == 221: 
             eta[0] += 1
+            total_eta += 1
             targ_eta_list.append(index)
-            targ_particle_list.append(particle)
+            targ_eta_particle_list.append(particle)
             targ_eta_array = at.fill_array(targ_eta_array, pythia.event, index)
 
             if particle.eta() <= 5 and particle.eta() >= 2:
                 eta[1] += 1
+                total_eta_acc += 1
+
+    # Desired eta_prime particles
+    for index, particle in enumerate(pythia.event):
+        if particle.idAbs() == 331: 
+            eta_prime[0] += 1
+            total_eta_prime += 1
+            targ_eta_prime_list.append(index)
+            targ_eta_prime_particle_list.append(particle)
+            targ_eta_prime_array = at.fill_array(targ_eta_prime_array, pythia.event, index)
+
+            if particle.eta() <= 5 and particle.eta() >= 2:
+                eta_prime[1] += 1
+                total_eta_prime_acc += 1
     
-    # Desired lep(muon) particles
+    # Desired muons 
     for index, particle in enumerate(pythia.event):
         if particle.idAbs() == 13 and particle.eta() <= 5 and particle.eta() >= 2:
             targ_lep_list.append(index)
             targ_lep_particle.append(particle)
+    # Muons: From eta parent
     for i in range(len(targ_lep_list)):
-        if pythia.event[pythia.event[targ_lep_list[i]].mother1()].id() == 221:
-            muon += 1
-
+        if pythia.event[pythia.event[targ_lep_list[i]].mother1()].id() == 221 and pythia.event[pythia.event[targ_lep_list[i]].mother1()].eta() >= 2 and pythia.event[pythia.event[targ_lep_list[i]].mother1()].eta() <= 5:
+            eta_muons[0] += 1
+            total_eta_muons +=1
+    # Muons: From eta_prime parent
+    for i in range(len(targ_lep_list)):
+        if pythia.event[pythia.event[targ_lep_list[i]].mother1()].id() == 331 and pythia.event[pythia.event[targ_lep_list[i]].mother1()].eta() >= 2 and pythia.event[pythia.event[targ_lep_list[i]].mother1()].eta() <= 5:
+            eta_prime_muons[0] += 1
+            total_eta_prime_muons += 1
     tree.Fill()
-#pdb.set_trace() 
-# pythia.stat()
 
-tree.Print()
+print("\n The total number of events for this script is ",nEvent,".\n")
+print("There are a total of", total_eta, "eta produced.")
+print("There are a total of", total_eta_acc, "eta in acceptance produced.")
+print("There are a total of", total_eta_muons, "muons in acceptance produced from eta(also in acceptance).")
+print(f"For every eta in acceptance there are {total_eta_muons/total_eta_acc:.2f} muons also in acceptance.")
+print(f"For every {total_eta/total_eta_acc:.2f} eta produced one will be in the acceptance. \n")
+
+
+print("There are a total of", total_eta_prime, "eta_primes produced.")
+print("There are a total of", total_eta_prime_acc, "eta_primes in acceptance produced.")
+print("There are a total of", total_eta_prime_muons, "muons in acceptance produced from eta_prime(also in acceptance).")
+print(f"For every eta_prime in acceptance there are {total_eta_prime_muons/total_eta_prime_acc:.2f} muons also in acceptance.")
+print(f"For every {total_eta_prime/total_eta_prime_acc:.2f} eta_prime produced one will be in the acceptance. \n")
+
+print(f"The ratio of eta to eta_prime particle in acceptance is {total_eta_acc/total_eta_prime_acc:.2f}.")
+print(f"The ratio of eta muons to eta_prime muons in acceptance is {total_eta_muons/total_eta_prime_muons:.2f}.")
+print("From this ratio just above I conclude there are more muons in acceptance from the eta than eta_prime")
+ 
+ 
+# pdb.set_trace() 
+# pythia.stat()
+#tree.Print()
 file.Write()      
 #tree.Draw("TotalEtaPerEvent:TotalEtaAccPerEvent")
-tree.Scan()
+#tree.Scan('EtaPerEvent.TEPE:EtaPerEvent.TEAPE:EtaMuons.EtaMuonsAcc')
