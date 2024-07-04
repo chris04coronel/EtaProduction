@@ -61,7 +61,7 @@ tree.Branch('Eta_Prime_Kin', targ_eta_prime_array, var_str)
 tree.Branch('EtaPerEvent', eta, 'TEPE/I:TEAPE/I')
 tree.Branch('EtaPrimePerEvent', eta_prime, 'TEPPE/I:TEPAPE/I')
 tree.Branch('EtaMuons', eta_muons, 'EtaMuonsAcc/I')
-tree.Branch('EtaPrimeMuons', eta_prime_muons, 'EtaPrimeMuonsAcc')
+tree.Branch('EtaPrimeMuons', eta_prime_muons, 'EtaPrimeMuonsAcc/I')
 # Total counters
 total_eta = 0
 total_eta_acc = 0
