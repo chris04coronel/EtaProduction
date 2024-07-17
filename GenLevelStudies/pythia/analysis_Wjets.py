@@ -28,7 +28,6 @@ lepton_vec = vector.zip({
     'py': tree['TargetLepton'].py,
     'pz': tree['TargetLepton'].pz,
     'e': tree['TargetLepton'].energy,
-    'pid': tree['TargetLepton'].id
 })
 
 jet_vec = vector.zip({
