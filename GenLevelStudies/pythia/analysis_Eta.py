@@ -233,13 +233,13 @@ prime_sibmuons = et.TwoDEta(PMuVec1, PMuVec2, PMuVec3, PMuVec4)
 counter = 0
 prime_delta_eta_list = []
 for i in range(len(prime_sibmuons[:,1])):
-    mineta = 0
-    maxeta = 0
+    pmineta = 0
+    pmaxeta = 0
     sibs = prime_sibmuons[i,:]
-    mineta = np.min(sibs)
-    maxeta = np.max(sibs)
-    delta_eta = maxeta-mineta
-    prime_delta_eta_list.append(delta_eta)
+    pmineta = np.min(sibs)
+    pmaxeta = np.max(sibs)
+    prime_delta_eta = pmaxeta-pmineta
+    prime_delta_eta_list.append(prime_delta_eta)
     if sibs[0] <= 5 and sibs[0] >= 2 and sibs[1] <= 5 and sibs[1] >= 2 and sibs[2] <= 5 and sibs[2] >= 2 and sibs[3] <= 5 and sibs[3] >= 2:
         counter += 1
         if counter == 1:
@@ -253,7 +253,7 @@ fig, axs = plt.subplots(1, 1,
 axs.grid(b = True, color ='grey', 
         linestyle ='-.', linewidth = 0.5, 
         alpha = 0.6)
-counts, edges, bars = plt.hist(delta_eta_list ,edgecolor='black', color='rebeccapurple', bins=35)
+counts, edges, bars = plt.hist(prime_delta_eta_list ,edgecolor='black', color='rebeccapurple', bins=35)
 plt.bar_label(bars)
 axs.xaxis.set_tick_params(pad = 20) 
 axs.yaxis.set_tick_params(pad = 20) 
