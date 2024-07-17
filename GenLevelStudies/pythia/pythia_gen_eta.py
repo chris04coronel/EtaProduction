@@ -37,7 +37,6 @@ pythia.readFile(eta_path + "/GenLevelStudies/pythia/" + card_file_name)
 # Starting up pythia
 pythia.init()
 nEvent = pythia.mode("Main:numberOfEvents") 
-#This is calling number of events from line 27
 
 # Initialize Arrays
 # Connect branches to python_array
@@ -46,9 +45,6 @@ nEvent = pythia.mode("Main:numberOfEvents")
 var_str = 'px/F:py/F:pz/F:pT/F:p/F:eta/F:energy/F:phi/F:m0/F:id/F:charge/F:status/F' # 12 inputs
 evt_array = np.array([0], dtype=np.float32)
 
-# Look at the number of inputs in line 46. This is why line below has "*12".
-# I should be looking at children particles. Either lep1, lep2, ... and possibly eta(parent) 
-# Looking for 4 leptons (muon)
 targ_eta_array = np.array([0]*12, dtype=np.float32)
 mu1 = np.array([0]*12, dtype=np.float32)
 mu2 = np.array([0]*12, dtype=np.float32)
@@ -56,23 +52,36 @@ mu3 = np.array([0]*12, dtype=np.float32)
 mu4 = np.array([0]*12, dtype=np.float32)
 AllMu = [mu1, mu2, mu3, mu4]
 
+targ_eta_prime_array = np.array([0]*12, dtype=np.float32)
+p_mu1 = np.array([0]*12, dtype=np.float32)
+p_mu2 = np.array([0]*12, dtype=np.float32)
+p_mu3 = np.array([0]*12, dtype=np.float32)
+p_mu4 = np.array([0]*12, dtype=np.float32)
+AllPMu = [p_mu1, p_mu2, p_mu3, p_mu4]
+
 # Set up ROOT
 file = ROOT.TFile.Open(eta_path + "/GenLevelStudies/pythia/" + ofile_name,
                        "RECREATE")
                        # RECREATE if the file isnt there it will make it, if it is, it will overwrite.
 
 
-# This is the first instance of creating a tree
-# (Name, Title)
-# Create our branches. It can have a variable number of leaves
-# This Code below comes from ROOT. I had some trouble looking at the literture trying to figure out what exactly is being done here.
+# Creating Tree for Eta and its muons
 tree_eta = ROOT.TTree("Tree_eta", "Tree_eta")
 tree_eta.Branch('Event', evt_array, 'Event/F') # Only has 1 leaf
 tree_eta.Branch('Eta', targ_eta_array, var_str)
-tree_eta.Branch('Muon1', mu1, var_str) # Has 12 leavess. Shown on line 46
-tree_eta.Branch('Muon2', mu2, var_str)
-tree_eta.Branch('Muon3', mu3, var_str)
-tree_eta.Branch('Muon4', mu4, var_str)
+tree_eta.Branch('Muon1', p_mu1, var_str) # Has 12 leavess. Shown on line 46
+tree_eta.Branch('Muon2', p_mu2, var_str)
+tree_eta.Branch('Muon3', p_mu3, var_str)
+tree_eta.Branch('Muon4', p_mu4, var_str)
+
+# Creating Tree/Branches for Eta_prime and its muons
+tree_eta_prime = ROOT.TTree("Tree_eta_prime", "Tree_eta_prime")
+tree_eta_prime.Branch('Event', evt_array, 'Event/F') # Only has 1 leaf
+tree_eta_prime.Branch('EtaPrime', targ_eta_array, var_str)
+tree_eta_prime.Branch('MuonPrime1', mu1, var_str) # Has 12 leavess. Shown on line 46
+tree_eta_prime.Branch('MuonPrime2', mu2, var_str)
+tree_eta_prime.Branch('MuonPrime3', mu3, var_str)
+tree_eta_prime.Branch('MuonPrime4', mu4, var_str)
 
 # Entering Event Loop
 for iEvent in range(nEvent):
@@ -84,7 +93,10 @@ for iEvent in range(nEvent):
     targ_eta_list = []
     targ_particle_list = []
 
-    # Particle Loop
+    targ_eta_prime_list = []
+    targ_prime_particle_list = []
+
+    # Eta Particle Loop
     for index, particle in enumerate(pythia.event):
         if particle.idAbs() == 221: # Look for outgoing particle eta id = 221 
             targ_eta_list.append(index)
@@ -98,8 +110,25 @@ for iEvent in range(nEvent):
         for j in range(len(daughter_index_list)):
             daughter_index_list[j] = j + targ_particle_list[i].daughter1()
             AllMu[j] = at.fill_array(AllMu[j], pythia.event, daughter_index_list[j])
-        tree_eta.Fill()   
-#pdb.set_trace() 
+        tree_eta.Fill()  
+
+    # Eta_Prime Particle Loop
+    for index, particle in enumerate(pythia.event):
+        if particle.idAbs() == 331: # Look for outgoing particle eta id = 221 
+            targ_eta_prime_list.append(index)
+            targ_prime_particle_list.append(particle)        
+    
+    # Find Target Particles Loop  
+    for i in range(len(targ_eta_prime_list)):
+        prime_daughter_index_list = [0]*(targ_prime_particle_list[i].daughter2()-targ_prime_particle_list[i].daughter1()+1)
+        targ_eta_prime_array = at.fill_array(targ_eta_prime_array, pythia.event, targ_eta_prime_list[i])  
+        for j in range(len(prime_daughter_index_list)):
+            prime_daughter_index_list[j] = j + targ_prime_particle_list[i].daughter1()
+            AllPMu[j] = at.fill_array(AllPMu[j], pythia.event, prime_daughter_index_list[j])
+        tree_eta_prime.Fill()
+
+
+# pdb.set_trace() 
 # pythia.stat()
 # tree.Print()
 file.Write() 
