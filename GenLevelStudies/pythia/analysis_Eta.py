@@ -200,7 +200,7 @@ fig, axs = plt.subplots(1, 1,
 axs.grid(b = True, color ='grey', 
         linestyle ='-.', linewidth = 0.5, 
         alpha = 0.6)
-counts, edges, bars = plt.hist(prime_muons_pt ,edgecolor='black', color='teal', bins=35, range=[0,1])
+counts, edges, bars = plt.hist(prime_muons_pt ,edgecolor='black', color='rebeccapurple', bins=35, range=[0,1])
 plt.bar_label(bars)
 axs.xaxis.set_tick_params(pad = 20) 
 axs.yaxis.set_tick_params(pad = 20) 
@@ -218,7 +218,7 @@ fig, axs = plt.subplots(1, 1,
 axs.grid(b = True, color ='grey', 
         linestyle ='-.', linewidth = 0.5, 
         alpha = 0.6)
-counts, edges, bars = plt.hist(prime_muons_eta ,edgecolor='black', color='teal', bins=35)
+counts, edges, bars = plt.hist(prime_muons_eta ,edgecolor='black', color='rebeccapurple', bins=35)
 plt.bar_label(bars)
 axs.xaxis.set_tick_params(pad = 20) 
 axs.yaxis.set_tick_params(pad = 20) 
@@ -253,7 +253,7 @@ fig, axs = plt.subplots(1, 1,
 axs.grid(b = True, color ='grey', 
         linestyle ='-.', linewidth = 0.5, 
         alpha = 0.6)
-counts, edges, bars = plt.hist(delta_eta_list ,edgecolor='black', color='teal', bins=35)
+counts, edges, bars = plt.hist(delta_eta_list ,edgecolor='black', color='rebeccapurple', bins=35)
 plt.bar_label(bars)
 axs.xaxis.set_tick_params(pad = 20) 
 axs.yaxis.set_tick_params(pad = 20) 
@@ -279,7 +279,7 @@ fig, axs = plt.subplots(1, 1,
 axs.grid(b = True, color ='grey', 
         linestyle ='-.', linewidth = 0.5, 
         alpha = 0.6)
-counts, edges, bars = plt.hist(delta_eta_acc_list ,edgecolor='black', color='teal', bins=35)
+counts, edges, bars = plt.hist(delta_eta_acc_list ,edgecolor='black', color='rebeccapurple', bins=35)
 plt.bar_label(bars)
 axs.xaxis.set_tick_params(pad = 20) 
 axs.yaxis.set_tick_params(pad = 20) 
