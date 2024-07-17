@@ -265,12 +265,12 @@ plt.savefig('pythia/Histograms/prime_4Muons_delta_eta')
 # Prime Histogram 4 
 # Delta eta when all siblings are in Acceptance
 prime_delta_eta_acc_list = []
-for i in range(len(sibs_eta_acc[:,1])):
-    mineta = 0
-    maxeta = 0
-    mineta = np.min(sibs_eta_acc[i,:])
-    maxeta = np.max(sibs_eta_acc[i,:])
-    prime_delta_eta_acc = maxeta-mineta
+for i in range(len(prime_sibs_eta_acc[:,1])):
+    pmineta = 0
+    pmaxeta = 0
+    pmineta = np.min(prime_sibs_eta_acc[i,:])
+    pmaxeta = np.max(prime_sibs_eta_acc[i,:])
+    prime_delta_eta_acc = pmaxeta-pmineta
     prime_delta_eta_acc_list.append(prime_delta_eta_acc)
 
 fig, axs = plt.subplots(1, 1,
@@ -279,7 +279,7 @@ fig, axs = plt.subplots(1, 1,
 axs.grid(b = True, color ='grey', 
         linestyle ='-.', linewidth = 0.5, 
         alpha = 0.6)
-counts, edges, bars = plt.hist(delta_eta_acc_list ,edgecolor='black', color='rebeccapurple', bins=35)
+counts, edges, bars = plt.hist(prime_delta_eta_acc_list ,edgecolor='black', color='rebeccapurple', bins=35)
 plt.bar_label(bars)
 axs.xaxis.set_tick_params(pad = 20) 
 axs.yaxis.set_tick_params(pad = 20) 
@@ -297,3 +297,4 @@ print('The smallest pseudorapidty spread among siblings from eta prime is', np.a
 print('\nThe avaerage pseudorapidty spread among siblings all in acceptance from eta prime is', np.array(prime_delta_eta_acc_list).mean())
 print('The greatest pseudorapidty spread among siblings all in acceptance from eta prime is', np.array(prime_delta_eta_acc_list).max())
 print('The smallest pseudorapidty spread among siblings all in acceptance from eta prime is', np.array(prime_delta_eta_acc_list).min())
+#pdb.set_trace
