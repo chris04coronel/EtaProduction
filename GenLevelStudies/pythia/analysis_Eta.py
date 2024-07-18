@@ -85,7 +85,7 @@ muons_pt = et.LApt(eta_mu_1_vec, eta_mu_2_vec, eta_mu_3_vec, eta_mu_4_vec)
 fig, axs = plt.subplots(1, 1,
                         figsize =(10, 7), 
                         tight_layout = True)
-axs.grid(b = True, color ='grey', 
+axs.grid(visible = True, color ='grey', 
         linestyle ='-.', linewidth = 0.5, 
         alpha = 0.6)
 counts, edges, bars = plt.hist(muons_pt ,edgecolor='black', color='teal', bins=35, range=[0,1])
@@ -103,7 +103,7 @@ muons_eta = et.LAeta(eta_mu_1_vec, eta_mu_2_vec, eta_mu_3_vec, eta_mu_4_vec)
 fig, axs = plt.subplots(1, 1,
                         figsize =(10, 7), 
                         tight_layout = True)
-axs.grid(b = True, color ='grey', 
+axs.grid(visible = True, color ='grey', 
         linestyle ='-.', linewidth = 0.5, 
         alpha = 0.6)
 counts, edges, bars = plt.hist(muons_eta ,edgecolor='black', color='teal', bins=35)
@@ -138,7 +138,7 @@ for i in range(len(sibmuons[:,1])):
 fig, axs = plt.subplots(1, 1,
                         figsize =(10, 7), 
                         tight_layout = True)
-axs.grid(b = True, color ='grey', 
+axs.grid(visible = True, color ='grey', 
         linestyle ='-.', linewidth = 0.5, 
         alpha = 0.6)
 counts, edges, bars = plt.hist(delta_eta_list ,edgecolor='black', color='teal', bins=35)
@@ -164,7 +164,7 @@ for i in range(len(sibs_eta_acc[:,1])):
 fig, axs = plt.subplots(1, 1,
                         figsize =(10, 7), 
                         tight_layout = True)
-axs.grid(b = True, color ='grey', 
+axs.grid(visible = True, color ='grey', 
         linestyle ='-.', linewidth = 0.5, 
         alpha = 0.6)
 counts, edges, bars = plt.hist(delta_eta_acc_list ,edgecolor='black', color='teal', bins=35)
@@ -179,13 +179,13 @@ plt.savefig('pythia/Histograms/4Muons_delta_eta_acc')
 
 print('The Highest pT among all muons is', muons_pt.max(),'GeV')
 print('The Lowest pT among all muons is', muons_pt.min(),'GeV')
-print('The avaerage pseudorapidty spread among siblings is', np.array(delta_eta_list).mean())
-print('The greatest pseudorapidty spread among siblings is', np.array(delta_eta_list).max())
-print('The smallest pseudorapidty spread among siblings is', np.array(delta_eta_list).min())
+print('The average pseudorapidity spread among siblings is', np.array(delta_eta_list).mean())
+print('The greatest pseudorapidity spread among siblings is', np.array(delta_eta_list).max())
+print('The smallest pseudorapidity spread among siblings is', np.array(delta_eta_list).min())
 
-print('\nThe avaerage pseudorapidty spread among siblings all in acceptance is', np.array(delta_eta_acc_list).mean())
-print('The greatest pseudorapidty spread among siblings all in acceptance is', np.array(delta_eta_acc_list).max())
-print('The smallest pseudorapidty spread among siblings all in acceptance is', np.array(delta_eta_acc_list).min())
+print('\nThe avaerage pseudorapidity spread among siblings all in acceptance is', np.array(delta_eta_acc_list).mean())
+print('The greatest pseudorapidity spread among siblings all in acceptance is', np.array(delta_eta_acc_list).max())
+print('The smallest pseudorapidity spread among siblings all in acceptance is', np.array(delta_eta_acc_list).min())
 
 ################
 ################
@@ -197,7 +197,7 @@ prime_muons_pt = et.LApt(PMuVec1, PMuVec2, PMuVec3, PMuVec4)
 fig, axs = plt.subplots(1, 1,
                         figsize =(10, 7), 
                         tight_layout = True)
-axs.grid(b = True, color ='grey', 
+axs.grid(visible = True, color ='grey', 
         linestyle ='-.', linewidth = 0.5, 
         alpha = 0.6)
 counts, edges, bars = plt.hist(prime_muons_pt ,edgecolor='black', color='rebeccapurple', bins=35, range=[0,1])
@@ -215,7 +215,7 @@ prime_muons_eta = et.LAeta(PMuVec1, PMuVec2, PMuVec3, PMuVec4)
 fig, axs = plt.subplots(1, 1,
                         figsize =(10, 7), 
                         tight_layout = True)
-axs.grid(b = True, color ='grey', 
+axs.grid(visible = True, color ='grey', 
         linestyle ='-.', linewidth = 0.5, 
         alpha = 0.6)
 counts, edges, bars = plt.hist(prime_muons_eta ,edgecolor='black', color='rebeccapurple', bins=35)
@@ -250,7 +250,7 @@ for i in range(len(prime_sibmuons[:,1])):
 fig, axs = plt.subplots(1, 1,
                         figsize =(10, 7), 
                         tight_layout = True)
-axs.grid(b = True, color ='grey', 
+axs.grid(visible = True, color ='grey', 
         linestyle ='-.', linewidth = 0.5, 
         alpha = 0.6)
 counts, edges, bars = plt.hist(prime_delta_eta_list ,edgecolor='black', color='rebeccapurple', bins=35)
@@ -276,7 +276,7 @@ for i in range(len(prime_sibs_eta_acc[:,1])):
 fig, axs = plt.subplots(1, 1,
                         figsize =(10, 7), 
                         tight_layout = True)
-axs.grid(b = True, color ='grey', 
+axs.grid(visible = True, color ='grey', 
         linestyle ='-.', linewidth = 0.5, 
         alpha = 0.6)
 counts, edges, bars = plt.hist(prime_delta_eta_acc_list ,edgecolor='black', color='rebeccapurple', bins=35)
@@ -288,13 +288,77 @@ plt.xlabel('Delta Eta')
 plt.ylabel('Number of Particles per Delta eta')
 plt.savefig('pythia/Histograms/prime_4Muons_delta_eta_acc')
 
+
+
+############
+############
+############
+# New Histogram
+all_muons_acc_pt = et.eta_acc_LApt(eta_mu_1_vec, eta_mu_2_vec, eta_mu_3_vec, eta_mu_4_vec)
+fig, axs = plt.subplots(1, 1,
+                        figsize =(10, 7), 
+                        tight_layout = True)
+axs.grid(visible = True, color ='grey', 
+        linestyle ='-.', linewidth = 0.5, 
+        alpha = 0.6)
+counts, edges, bars = plt.hist(all_muons_acc_pt ,edgecolor='black', color='teal', bins=35)
+plt.bar_label(bars)
+axs.xaxis.set_tick_params(pad = 20) 
+axs.yaxis.set_tick_params(pad = 20) 
+plt.title('4 muons in Acc pT ')
+plt.xlabel('pT in GeV')
+plt.ylabel('Number of Particles per pT')
+plt.savefig('pythia/Histograms/4muons_acc_pT')
+
+# New Histogram
+all_prime_muons_acc_pt = et.eta_acc_LApt(PMuVec1, PMuVec2, PMuVec3, PMuVec4)
+fig, axs = plt.subplots(1, 1,
+                        figsize =(10, 7), 
+                        tight_layout = True)
+axs.grid(visible = True, color ='grey', 
+        linestyle ='-.', linewidth = 0.5, 
+        alpha = 0.6)
+counts, edges, bars = plt.hist(all_prime_muons_acc_pt ,edgecolor='black', color='rebeccapurple', bins=35)
+plt.bar_label(bars)
+axs.xaxis.set_tick_params(pad = 20) 
+axs.yaxis.set_tick_params(pad = 20) 
+plt.title('4 Eta_Prime Muons in Acceptance pT ')
+plt.xlabel('pT in GeV')
+plt.ylabel('Number of Particles per pT')
+plt.savefig('pythia/Histograms/prime_4muons_acc_pT')
+
+#NewHistogram
+fig, axs = plt.subplots(1, 1,
+                        figsize =(10, 7), 
+                        tight_layout = True)
+axs.grid(visible = True, color ='grey', 
+        linestyle ='-.', linewidth = 0.5, 
+        alpha = 0.6)
+#counts, edges, bars = plt.hist([all_muons_acc_pt,all_prime_muons_acc_pt], color=['teal','rebeccapurple'], bins=35, label=['Eta Muons', 'Eta Prime Muons'])
+#plt.bar_label(bars)
+plt.hist([all_muons_acc_pt,all_prime_muons_acc_pt], color=['teal','rebeccapurple'], bins=35, label=['Eta Muons', 'Eta Prime Muons'], alpha=0.5, range=[0,2])
+axs.xaxis.set_tick_params(pad = 20) 
+axs.yaxis.set_tick_params(pad = 20) 
+plt.title('pT of Muons in Acceptance Decayed from Eta and Eta_Prime')
+plt.legend(loc='upper right')
+plt.xlabel('pT in GeV')
+plt.ylabel('Number of Particles per pT')
+plt.savefig('pythia/Histograms/E_EP_muons_acc_pT')
+
 print('The Highest pT among all muons from eta_prime is', prime_muons_pt.max(),'GeV')
 print('The Lowest pT among all muons from eta_pime is', prime_muons_pt.min(),'GeV')
-print('The avaerage pseudorapidty spread among siblings from eta prime is', np.array(prime_delta_eta_list).mean())
-print('The greatest pseudorapidty spread among siblings from eta prime is', np.array(prime_delta_eta_list).max())
-print('The smallest pseudorapidty spread among siblings from eta prime is', np.array(prime_delta_eta_list).min())
+print('The average pseudorapidity spread among siblings from eta prime is', np.array(prime_delta_eta_list).mean())
+print('The greatest pseudorapidity spread among siblings from eta prime is', np.array(prime_delta_eta_list).max())
+print('The smallest pseudorapidity spread among siblings from eta prime is', np.array(prime_delta_eta_list).min())
 
-print('\nThe avaerage pseudorapidty spread among siblings all in acceptance from eta prime is', np.array(prime_delta_eta_acc_list).mean())
-print('The greatest pseudorapidty spread among siblings all in acceptance from eta prime is', np.array(prime_delta_eta_acc_list).max())
-print('The smallest pseudorapidty spread among siblings all in acceptance from eta prime is', np.array(prime_delta_eta_acc_list).min())
-#pdb.set_trace
+print('\nThe avaerage pseudorapidity spread among siblings all in acceptance from eta prime is', np.array(prime_delta_eta_acc_list).mean())
+print('The greatest pseudorapidity spread among siblings all in acceptance from eta prime is', np.array(prime_delta_eta_acc_list).max())
+print('The smallest pseudorapidity spread among siblings all in acceptance from eta prime is', np.array(prime_delta_eta_acc_list).min())
+
+print('\nThe highest pT among all muons from eta is', np.array(all_muons_acc_pt).max(),'GeV')
+print('The highest pT among all muons from eta prime is', np.array(all_prime_muons_acc_pt).max(),'GeV')
+print('The lowest pT among all muons from eta is', np.array(all_muons_acc_pt).min(),'GeV')
+print('The lowest pT among all muons from eta prime is', np.array(all_prime_muons_acc_pt).min(),'GeV')
+print('The average pT among all muons from eta is', np.array(all_muons_acc_pt).mean(),'GeV')
+print('The average pT among all muons from eta prime is', np.array(all_prime_muons_acc_pt).mean(),'GeV')
+pdb.set_trace()

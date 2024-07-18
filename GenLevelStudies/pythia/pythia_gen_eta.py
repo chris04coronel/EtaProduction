@@ -103,7 +103,7 @@ for iEvent in range(nEvent):
             targ_particle_list.append(particle)        
     # ^Now that we have list of desired particles we need to find out order of particles.         
     
-    # Find Target Particles Loop  
+    # Find Daughters of Eta Loop  
     for i in range(len(targ_eta_list)):
         daughter_index_list = [0]*(targ_particle_list[i].daughter2()-targ_particle_list[i].daughter1()+1)
         targ_eta_array = at.fill_array(targ_eta_array, pythia.event, targ_eta_list[i])  
@@ -118,7 +118,7 @@ for iEvent in range(nEvent):
             targ_eta_prime_list.append(index)
             targ_prime_particle_list.append(particle)        
     
-    # Find Target Particles Loop  
+    # Find Daughters of Eta_Prime Loop  
     for i in range(len(targ_eta_prime_list)):
         prime_daughter_index_list = [0]*(targ_prime_particle_list[i].daughter2()-targ_prime_particle_list[i].daughter1()+1)
         targ_eta_prime_array = at.fill_array(targ_eta_prime_array, pythia.event, targ_eta_prime_list[i])  
