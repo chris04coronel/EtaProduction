@@ -7,7 +7,8 @@ import yaml
 import numpy as np
 # HEP Packages
 import pythia8
-import ROOT
+#import root
+#import ROOT
 
 # Personal Packages
 sys.path.append(".")
@@ -25,11 +26,11 @@ sys.path.insert(0, lib)
 
 # Inputs 
 card_file_name = "etameson.card"
+#parent Id selector
 ofile_name = "EtaProduction.root"
 
 # Read in Card File
 # How to read in a card file. Look up in a tutorial.
-# If you have two string can "+"
 pythia = pythia8.Pythia()
 pythia.readFile(eta_path + "/GenLevelStudies/pythia/" + card_file_name)
 
@@ -65,23 +66,23 @@ file = ROOT.TFile.Open(eta_path + "/GenLevelStudies/pythia/" + ofile_name,
                        # RECREATE if the file isnt there it will make it, if it is, it will overwrite.
 
 
-# Creating Tree for Eta and its muons
+# Creating Tree/Brances for Eta and its muons
 tree_eta = ROOT.TTree("Tree_eta", "Tree_eta")
 tree_eta.Branch('Event', evt_array, 'Event/F') # Only has 1 leaf
 tree_eta.Branch('Eta', targ_eta_array, var_str)
-tree_eta.Branch('Muon1', p_mu1, var_str) # Has 12 leavess. Shown on line 46
-tree_eta.Branch('Muon2', p_mu2, var_str)
-tree_eta.Branch('Muon3', p_mu3, var_str)
-tree_eta.Branch('Muon4', p_mu4, var_str)
+tree_eta.Branch('Muon1', mu1, var_str) # Has 12 leavess. Shown on line 46
+tree_eta.Branch('Muon2', mu2, var_str)
+tree_eta.Branch('Muon3', mu3, var_str)
+tree_eta.Branch('Muon4', mu4, var_str)
 
 # Creating Tree/Branches for Eta_prime and its muons
 tree_eta_prime = ROOT.TTree("Tree_eta_prime", "Tree_eta_prime")
 tree_eta_prime.Branch('Event', evt_array, 'Event/F') # Only has 1 leaf
 tree_eta_prime.Branch('EtaPrime', targ_eta_array, var_str)
-tree_eta_prime.Branch('MuonPrime1', mu1, var_str) # Has 12 leavess. Shown on line 46
-tree_eta_prime.Branch('MuonPrime2', mu2, var_str)
-tree_eta_prime.Branch('MuonPrime3', mu3, var_str)
-tree_eta_prime.Branch('MuonPrime4', mu4, var_str)
+tree_eta_prime.Branch('MuonPrime1', p_mu1, var_str) # Has 12 leavess. Shown on line 46
+tree_eta_prime.Branch('MuonPrime2', p_mu2, var_str)
+tree_eta_prime.Branch('MuonPrime3', p_mu3, var_str)
+tree_eta_prime.Branch('MuonPrime4', p_mu4, var_str)
 
 # Entering Event Loop
 for iEvent in range(nEvent):
@@ -114,7 +115,7 @@ for iEvent in range(nEvent):
 
     # Eta_Prime Particle Loop
     for index, particle in enumerate(pythia.event):
-        if particle.idAbs() == 331: # Look for outgoing particle eta id = 221 
+        if particle.idAbs() == 331: # Look for outgoing particle eta' id = 331 
             targ_eta_prime_list.append(index)
             targ_prime_particle_list.append(particle)        
     
@@ -128,7 +129,7 @@ for iEvent in range(nEvent):
         tree_eta_prime.Fill()
 
 
-# pdb.set_trace() 
-# pythia.stat()
-# tree.Print()
+#pdb.set_trace() 
+pythia.stat()
+#tree.Print()
 file.Write() 
