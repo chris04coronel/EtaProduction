@@ -1,0 +1,44 @@
+! 1) Settings used in the main program.
+Main:numberOfEvents = 100000         ! number of events to generate
+
+! 2) Settings related to output in init(), next() and stat().
+Init:showChangedSettings = on      ! list changed settings
+Init:showChangedParticleData = on ! list changed particle data
+Next:numberCount = 1000             ! print message every n events
+Next:numberShowInfo = 1            ! print event information n times
+Next:numberShowProcess = 1         ! print process record n times
+Next:numberShowEvent = 0           ! print event record n times
+
+! 3) Beam parameter settings.
+Beams:idA = 2212     ! first incoming beam is a 2212, i.e. a proton.
+Beams:idB = 2212     ! second beam is also a proton.
+Beams:eCM = 13600.    ! the cm energy of collisions.
+#test E scaling for potential higher sqrt(s) running in Run 3
+#Beams:eCM = 13500.    ! the cm energy of collisions.
+
+!Hard process - here it is actually MinBias ...
+#WeakDoubleBoson:ffbar2WW = on
+#WeakSingleBoson:ffbar2W = on
+SoftQCD:all = on
+
+# Eta' decays (pid = 331)
+# Force decay to new 4 mu channel
+331:onMode = off
+331:addChannel = on 1.0 13 13 -13 13 -13
+#id:addChannel = onMode bRatio meMode product1 product2 .... 
+# meMode = 13 does double Dalitz  (https://pythia.org/latest-manual/ParticleDecays.html#section5)
+# also possible is id:oneChannel ...
+
+!Phase space selection
+#PhaseSpace:pTHatMin = 0.          ! minimal pT scale in process
+
+! 5) Switch on/off the key event generation steps.
+#PartonLevel:MPI = off              ! no multiparton interactions
+#PartonLevel:ISR = off              ! no initial-state radiation
+#PartonLevel:FSR = off              ! no final-state radiation
+#HadronLevel:Hadronize = off        ! no hadronization
+#HadronLevel:Decay = off            ! no decays
+
+! 6) Other settings. Can be expanded as desired.
+#Tune:preferLHAPDF = off            ! use internal PDFs when LHAPDF not linked
+#Tune:pp = 6                        ! use Tune 4Cx

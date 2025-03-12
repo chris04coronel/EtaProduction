@@ -29,12 +29,6 @@ SoftQCD:all = on
 # meMode = 13 does double Dalitz  (https://pythia.org/latest-manual/ParticleDecays.html#section5)
 # also possible is id:oneChannel ...
 
-## same for eta' decays (pid =331)
-## Force decay to new 4 mu channel
-#331:onMode = off
-#331:addChannel = on 1.0 13 13 -13 13 -13
-##id:addChannel = onMode bRatio meMode product1 product2 .... 
-
 !Phase space selection
 #PhaseSpace:pTHatMin = 0.          ! minimal pT scale in process
 

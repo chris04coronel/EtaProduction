@@ -12,10 +12,16 @@ import ROOT
 
 # Hard Code
 # [carfile(Must exist), rootfile(create), particle_branch(Create), pID(Must exist)]
-p = ['eta4mu.card','Eta4Mu.root', 'Eta', 221]
+#p = ['eta4mu.card','Eta4Mu.root', 'Eta', 221]
 #p = ['etaprime4mu.card','EtaPrime4Mu.root', 'EtaPrime', 331]
-#p = ['jpsi4mu.card', 'JPsi4Mu.root', 'JPsi', 443]
+p = ['jpsi4mu.card', 'JPsi4Mu.root', 'JPsi', 443]
 #p = ['eta2mu2e.card', 'Eta2Mu2E.root', 'Eta_2', 221]
+# Phase space meMode
+#p = ['eta4mu_phsp.card','Eta4Mu_phsp.root', 'Eta', 221]
+
+# Run 3
+#p = ['eta4mu_r3.card','Eta4Mu_R3.root', 'Eta', 221]
+#p = ['etaprime4mu_r3.card','EtaPrime4Mu_R3.root', 'EtaPrime', 331]
 
 # Personal Packages
 sys.path.append(".")
@@ -101,6 +107,6 @@ for iEvent in range(nEvent):
 
 # pdb.set_trace() 
 pythia.stat()
-# tree.Print()
+tree.Print()
 file.Write() 
 #pdb.set_trace() 

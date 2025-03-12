@@ -20,7 +20,7 @@ import pythia8
 # Example = [rootfile, particle, card file]
 #particle = ['Eta4Mu.root', 'Eta', 'eta4mu.card', 'Run 2']
 #particle = ['EtaPrime4Mu.root', 'EtaPrime', 'etaprime4mu.card', 'Run 2']
-particle = ['JPsi4Mu.root', 'JPsi', jpsi4mu.card, 'Run 2']
+particle = ['JPsi4Mu.root', 'JPsi', 'jpsi4mu.card', 'Run 2']
 #particle = ['Eta2Mu2E.root', 'Eta_2']
 #particle = ['Eta4Mu_phsp.root', 'Eta']
 

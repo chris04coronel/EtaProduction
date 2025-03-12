@@ -55,6 +55,17 @@ def TwoDEtaAcc(vec1, vec2, vec3, vec4):
                 nd_eta_acc_arr1 = np.vstack((nd_eta_acc_arr1, ndarr1[i,:]))
     return(nd_eta_acc_arr1)
 
+def PDEtaAcc(par1, vec1, vec2, vec3, vec4):
+    ''' This function serves to determine the total amount of decays where both the parent and the daughter particles 
+    are in the LHCb 2 < eta < 5 acceptance. Will return a number so set a varianel equal to this equation.
+    '''
+    counter = 0
+    for i in range(len(par1)):
+        if par1[i].eta <=5 and par1[i].eta >=2 and vec1[i].eta <=5 and vec1[i].eta >=2 and vec2[i].eta <=5 and vec2[i].eta >=2 and vec3[i].eta <=5 and vec3[i].eta >=2 and vec4[i].eta <=5 and vec4[i].eta >=2:
+            counter +=1
+    return(counter)
+
+
 def eta_acc_LApt(vec1, vec2, vec3, vec4):
     'takes four 4vectors cuts off those which dont meet eta(pseudorapidity) requierments and makes one list'
     import vector
@@ -86,20 +97,20 @@ def sort_pt(vec1, vec2, vec3, vec4):
             sort_ndarray = np.vstack((sort_ndarray, np.sort(TwoDimArray[i,:])))
     return(sort_ndarray)
 
-def eta_acc_sort_pt(vec1, vec2, vec3, vec4):
-    'looks for all 4 muons in acceptance and then sorts them by ascending pT returns nx4 array'
-    start_time=time.time()
+def eta_acc_sort_pt(par1,vec1, vec2, vec3, vec4):
+    'looks for all 4 muons and parent in LHCb acceptance and then sorts them by ascending muon pT returns nx4 array'
+    #start_time=time.time()
     counter = 0
     for i in range(len(vec1)):
-        if vec1[i].eta >=2 and vec1[i].eta <= 5 and vec2[i].eta >=2 and vec2[i].eta <= 5 and vec3[i].eta >=2 and vec3[i].eta <=5 and vec4[i].eta >=2 and vec4[i].eta <= 5:
+        if vec1[i].eta >=2 and vec1[i].eta <= 5 and vec2[i].eta >=2 and vec2[i].eta <= 5 and vec3[i].eta >=2 and vec3[i].eta <=5 and vec4[i].eta >=2 and vec4[i].eta <= 5 and par1[i].eta <= 5 and par1[i].eta >=2:
             if counter == 0:
                 counter += 1
-                arr1 =np.array([vec1[i].pt, vec2[i].pt, vec3[i].pt, vec3[i].pt])
+                arr1 =np.array([vec1[i].pt, vec2[i].pt, vec3[i].pt, vec4[i].pt])
                 sort_arr1 = np.sort(arr1)
             else:
-                arr1 =np.array([vec1[i].pt, vec2[i].pt, vec3[i].pt, vec3[i].pt])
+                arr1 =np.array([vec1[i].pt, vec2[i].pt, vec3[i].pt, vec4[i].pt])
                 sort_arr1 = np.vstack((sort_arr1, np.sort(arr1)))
-    print("My eta acc pT sorting function took", '{:.5f}'.format(time.time() - start_time), "seconds to run")
+    #print("My eta acc pT sorting function took", '{:.5f}'.format(time.time() - start_time), "seconds to run")
     return(sort_arr1)    
 
 def pT_check1(arr1, pt1):
@@ -128,16 +139,81 @@ def pT_check123(arr1, arr2, arr3, pt1, pt2, pt3):
     print(counter/len(arr1))
 
 def pT_check1234(arr1, arr2, arr3, arr4, pt1, pt2, pt3, pt4):
-    'takes in an nx4 dimensional array. Checks '
+    '''takes in 4 arrays and checks that if tranverse momentum 
+    in each array satisfy transverse momenutm in the argument  '''
+    counter = 0
+    for i in range(len(arr1)):
+        if arr1[i] >= pt1 and arr2[i] >= pt2 and arr3[i] >= pt3 and arr4[i] >= pt4:
+            counter += 1       
+    return(counter/len(arr1))
+
+def pT_min(arr1, arr2, arr3, arr4, low_pt):
+    '''takes in 4 arrays and checks that if tranverse momentum 
+    in each array satisfy transverse momentum minimum requirement in GeV. returns percentage that does.  '''
     counter = 0
     for i in range(len(arr1)):
         if arr1[i] >= pt1 and arr2[i] >= pt2 and arr3[i] >= pt3 and arr4[i] >= pt4:
             counter += 1
-    return('{:.2f}'.format(counter/len(arr1)*100))
-    #print(counter/len(arr1))
+    return('{:.2f}'.format((counter/len(arr1))*100))
+#####
+#-------------------------------------------------------------------------------------
+#####
+def min_bias_arr(par1, vec1, vec2, vec3, vec4):
+    '''Takes in 4 awkward array vectors that contain kinematics fir each variable. Then
+    it will cycle through and delete elements where not all are within the LHCb acceptance
+    of 2 < eta <5. It will return a nX4 vector array.
+    '''
+    nvec1 = np.array([])
+    nvec2 = np.array([])
+    nvec3 = np.array([])
+    nvec4 = np.array([])
+    for i in range(len(par1)):
+        if par1[i].eta > 2 and par1[i].eta < 5 and vec1[i].eta > 2 and vec1[i].eta < 5 and vec2[i].eta > 2 and vec2[i].eta < 5 and vec3[i].eta > 2 and vec3[i].eta < 5 and vec4[i].eta > 2 and vec4[i].eta < 5:
+            nvec1 = np.append(nvec1,vec1[i])
+            nvec2 = np.append(nvec2,vec2[i])
+            nvec3 = np.append(nvec3,vec3[i])
+            nvec4 = np.append(nvec4,vec4[i])
+    new_vec_array = np.transpose([nvec1, nvec2, nvec3, nvec4])
+    return(new_vec_array)
+
+def pt_p_min(vec_darr,min_pt, min_p ):
+    '''Takes in an nx4 vectory array. Prefferec it has already passed the min bias test to save on computation time. 
+    This it will check that every muon candidate passes the min pt and min p. It will return fractional value of decays 
+    that pass this filter. 
+    '''
+    counter = 0
+    for i in range(len(vec_darr[:,0])):
+        if vec_darr[i,0].pt >= min_pt and vec_darr[i,0].p >= min_p and vec_darr[i,1].pt >= min_pt and vec_darr[i,1].p >= min_p and vec_darr[i,2].pt >= min_pt and vec_darr[i,2].p >= min_p and vec_darr[i,3].pt >= min_pt and vec_darr[i,3].p >= min_p:
+            counter += 1
+    return(counter/len(vec_darr[:,0]))
+    
+def mb_pt_min(vec_darr, pt_min):
+    counter = 0
+    for i in range(len(vec_darr[:,0])):
+        if vec_darr[i,0].pt >= pt_min and vec_darr[i,1].pt >= pt_min and vec_darr[i,2].pt >= pt_min and vec_darr[i,3].pt >= pt_min:
+            counter += 1
+    return(counter/len(vec_darr[:,0]))
+
+def mb_p_min(vec_darr, p_min):
+    counter = 0
+    for i in range(len(vec_darr[:,0])):
+        if vec_darr[i,0].p >= p_min and vec_darr[i,1].p >= p_min and vec_darr[i,2].p >= p_min and vec_darr[i,3].p >= p_min:
+            counter += 1
+    return(counter/len(vec_darr[:,0]))
+
+#####
+#-------------------------------------------------------------------------------------
+#####
+def pT_nx4_min(arr1, low_pt):
+    '''takes in nx4 array that has already passed the min bias LHCb acceptance and checks that the tranverse'''
+    counter = 0
+    for i in range(len(arr1[:,0])):
+        if arr1[i,0] >= low_pt and arr1[i,1] >= low_pt and arr1[i,2] >= low_pt and arr1[i,3] >= low_pt:
+            counter += 1
+    return((counter/len(arr1[:,0]))*100)
 
 def inv_mass_recon_list(vec1, vec2, vec3, vec4):
-    '''Put in 4 vector classes and try to see how we recombine to find the invariant mass 
+    '''Put in 4 vector classes and recombines to find the invariant mass of those with daughts in hte LHCb acceptance. 
     '''
     inv_mass_list = []
     for i in range(len(vec1)):
@@ -151,6 +227,18 @@ def inv_mass_recon_list(vec1, vec2, vec3, vec4):
             inv_mass = math.sqrt(abs(E2 - P2))
             inv_mass_list.append(inv_mass)
     return(inv_mass_list)
+
+def frac_mass_recon_check(arr1, arr2, arr3, arr4, low_mass, high_mass):
+    ''' Take in 4 arrays and will reconstruct their masses and returns fraction of
+    how many values are with isn the mass rnage from the original aray length.
+    Mass (GeV).
+    '''
+    counter =0
+    list1 = inv_mass_recon_list(arr1, arr2, arr3, arr4)
+    for i in range(len(list1)):
+        if list1[i] >= low_mass and list1[i] <= high_mass:
+            counter +=1
+    return(counter/len(list1))
 
 def hist(list1, parent, savefig, title, xlabel, ylabel, color, bins):
     arr1=np.array(list1)
@@ -170,7 +258,7 @@ def hist(list1, parent, savefig, title, xlabel, ylabel, color, bins):
     plt.title(title)
     plt.xlabel(xlabel)
     plt.ylabel(ylabel)
-    plt.savefig('pythia/Histograms/' + parent +'/' + savefig)
+    plt.savefig('Histograms/' + parent +'/' + savefig)
 
 def hist_mass_curve(list1, parent, savefig, title1, color1, bins1):
     arr1 = np.array(list1)
@@ -190,7 +278,7 @@ def hist_mass_curve(list1, parent, savefig, title1, color1, bins1):
     plt.title(title1)
     plt.xlabel('m($\mu^+$$\mu^-$$\mu^+$$\mu^-$) [GeV/C^2]')
     plt.ylabel('Number of Candidates')
-    plt.savefig('pythia/Histograms/'+ parent +'/' + savefig)
+    plt.savefig('Histograms/'+ parent +'/' + savefig)
 
 
 
@@ -247,4 +335,4 @@ def hist_pT_4mu(parent, savefig, title1, arr1):
     # plt.plot(muon_fit3, gaussian(muon_fit3, *popt3), label='Muon3 fit', color='darkorange')
     # plt.plot(muon_fit4, gaussian(muon_fit4, *popt4), label='Muon4 fit', color='brown')
     plt.legend()
-    plt.savefig('pythia/Histograms/'+ parent + '/'+ savefig)
+    plt.savefig('Histograms/'+ parent + '/'+ savefig)

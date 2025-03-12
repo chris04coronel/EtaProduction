@@ -21,7 +21,7 @@ Beams:eCM = 13000.    ! the cm energy of collisions.
 #WeakSingleBoson:ffbar2W = on
 SoftQCD:all = on
 
-# same for eta' decays (pid =331)
+# same for Eta' decays (pid =331)
 # Force decay to new 4 mu channel
 331:onMode = off
 331:addChannel = on 1.0 13 13 -13 13 -13

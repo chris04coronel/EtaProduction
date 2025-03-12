@@ -11,16 +11,17 @@ import EtaTools as et
 import awkward as ak
 import uproot
 import vector
-#import ROOT as root
+import ROOT as root
 
 # Hard Code
-# Line 26 to distingush the name of particle from root file line 14-15
+# Example = [rootfile, particle, particle]
+particle = ['Eta4Mu.root', 'Eta', 'Eta']
+#particle = ['EtaPrime4Mu.root', 'EtaPrime', 'EtaPrime]
+#particle = ['JPsi4Mu.root', 'JPsi', 'JPsi]
+#particle = ['Eta2Mu2E.root', 'Eta_2', 'Eta_2]
+# phase space
+#particle = ['Eta4Mu_phsp.root', 'Eta', 'Eta_phsp']
 
-# Example = [rootfile, particle]
-particle = ['Eta4Mu.root', 'Eta']
-#particle = ['EtaPrime4Mu.root', 'EtaPrime']
-#particle = ['JPsi4Mu.root', 'JPsi']
-#particle = ['Eta2Mu2E.root', 'Eta_2']
 
 # Open the file
 #ifile = uproot.open("pythia/RootFiles/" + particle[0])
@@ -67,20 +68,20 @@ lep4 = vector.zip({
 # Histogram 1/4 Invariant mass reconstruction of 4 muons
 particle_inv_mass = et.inv_mass_recon_list(lep1, lep2, lep3, lep4)
 arr1=np.array(particle_inv_mass)
-et.hist_mass_curve(arr1, particle[1], particle[1]+'_inv_mass', '$m_{4\mu}$ Invariant Mass ', 'teal', 200)
+et.hist_mass_curve(arr1, particle[2], particle[1]+'_inv_mass', '$m_{4\mu}$ Invariant Mass ', 'teal', 200)
 
 # Historgram 2/4 Creates 4 histograms on one plot, for each lepton pT.
 plt.clf()
 muon_sorted_pt = et.eta_acc_sort_pt(lep1, lep2, lep3, lep4)
-et.hist_pT_4mu(particle[1], '4muons_mean_pT', particle[1]+' Muon Siblings in Acc pT Spread', muon_sorted_pt)
+et.hist_pT_4mu(particle[2], '4muons_mean_pT', particle[2]+' Muon Siblings in Acc pT Spread', muon_sorted_pt)
 
 # Histogram 3/4 pT
 muons_pt = et.LApt(lep1, lep2, lep3, lep4)
-et.hist(muons_pt, particle[1], '4Muons_pT', 'pT Among All Muons', 'Energy (GeV)', 'Number of Particles per pT', 'teal', 300)
+et.hist(muons_pt, particle[2], '4Muons_pT', 'pT Among All Muons', 'Energy (GeV)', 'Number of Particles per pT', 'teal', 300)
 
 # Histogram 4/4 all 4 muons 
 muons_eta = et.LAeta(lep1, lep2, lep3, lep4)
-et.hist(muons_eta, particle[1], '4MuonsEta', 'eta Among Individual Muons', 'eta', 'Number pf particle per eta','teal',  200 )
+et.hist(muons_eta, particle[2], '4MuonsEta', 'eta Among Individual Muons', 'eta', 'Number pf particle per eta','teal',  200 )
 
 # Histogram XX (All Muons in Acceptance)
 # all_muons_acc_pt = et.eta_acc_LApt(lep1, lep2, lep3, lep4)
