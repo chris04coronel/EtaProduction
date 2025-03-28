@@ -15,12 +15,12 @@ import ROOT as root
 
 # Hard Code
 # Example = [rootfile, particle, particle]
-particle = ['Eta4Mu.root', 'Eta', 'Eta']
-#particle = ['EtaPrime4Mu.root', 'EtaPrime', 'EtaPrime]
+#particle = ['Eta4Mu.root', 'Eta', 'Eta']
+#particle = ['EtaPrime4Mu.root', 'EtaPrime', 'EtaPrime']
 #particle = ['JPsi4Mu.root', 'JPsi', 'JPsi]
 #particle = ['Eta2Mu2E.root', 'Eta_2', 'Eta_2]
 # phase space
-#particle = ['Eta4Mu_phsp.root', 'Eta', 'Eta_phsp']
+particle = ['Eta4Mu_R3.root', 'Eta', 'Eta_R3', 'Run3']
 
 
 # Open the file
@@ -64,24 +64,35 @@ lep4 = vector.zip({
 ####################
 ####################
 ####################
+mb_arr = et.min_bias_arr(particle_vec, lep1, lep2, lep3, lep4)
 
-# Histogram 1/4 Invariant mass reconstruction of 4 muons
-particle_inv_mass = et.inv_mass_recon_list(lep1, lep2, lep3, lep4)
-arr1=np.array(particle_inv_mass)
-et.hist_mass_curve(arr1, particle[2], particle[1]+'_inv_mass', '$m_{4\mu}$ Invariant Mass ', 'teal', 200)
+# # Histogram 1/4 Invariant mass reconstruction of 4 muons
+# particle_inv_mass = et.inv_mass_recon_list(lep1, lep2, lep3, lep4)
+# arr1=np.array(particle_inv_mass)
+# et.hist_mass_curve(arr1, particle[2], particle[1]+'_inv_mass', '$m_{4\mu}$ Invariant Mass ', 'teal', 200)
 
-# Historgram 2/4 Creates 4 histograms on one plot, for each lepton pT.
-plt.clf()
-muon_sorted_pt = et.eta_acc_sort_pt(lep1, lep2, lep3, lep4)
-et.hist_pT_4mu(particle[2], '4muons_mean_pT', particle[2]+' Muon Siblings in Acc pT Spread', muon_sorted_pt)
+# # Historgram 2/4 Creates 4 histograms on one plot, for each lepton pT.
+# plt.clf()
+# muon_sorted_pt = et.eta_acc_sort_pt(particle_vec, lep1, lep2, lep3, lep4)
+# et.hist_pT_4mu(particle[2], '4muons_mean_pT', particle[2]+' Muon Siblings in Acc pT Spread', muon_sorted_pt)
 
-# Histogram 3/4 pT
-muons_pt = et.LApt(lep1, lep2, lep3, lep4)
-et.hist(muons_pt, particle[2], '4Muons_pT', 'pT Among All Muons', 'Energy (GeV)', 'Number of Particles per pT', 'teal', 300)
+# # Histogram 3/4 pT
+# muons_pt = et.LApt(lep1, lep2, lep3, lep4)
+# et.hist(muons_pt, particle[2], '4Muons_pT', 'pT Among All Muons', 'Energy (GeV)', 'Number of Particles per pT', 'teal', 300)
 
-# Histogram 4/4 all 4 muons 
-muons_eta = et.LAeta(lep1, lep2, lep3, lep4)
-et.hist(muons_eta, particle[2], '4MuonsEta', 'eta Among Individual Muons', 'eta', 'Number pf particle per eta','teal',  200 )
+# # Histogram 4/4 all 4 muons 
+# muons_eta = et.LAeta(lep1, lep2, lep3, lep4)
+# et.hist(muons_eta, particle[2], '4MuonsEta', 'eta Among Individual Muons', 'eta', 'Number pf particle per eta','teal',  200 )
+
+# Histogram pT distributions
+mu1pass = et.mb_pt_check1(mb_arr, .45)
+mu12pass = et.mb_pt_check12(mb_arr, .45)
+mu123pass = et.mb_pt_check123(mb_arr, .45)
+
+et.hist(mu1pass[:,2], particle[2], particle[1]+'mu2_pt_distrib'+particle[3], particle[1]+'Second Fastest Muon pT distribution'+particle[3], 'pT (Gev)', 'Candidates', 'black', 200)
+et.hist(mu1pass[:,1], particle[2],  particle[1]+'mu3_pt_distrib'+particle[3], particle[1]+'Third Fastest Muon pT distribution'+particle[3], 'pT (Gev)', 'Candidates', 'black', 200 )
+et.hist(mu1pass[:,0], particle[2],  particle[1]+'mu4_pt_distrib'+particle[3], particle[1]+'Fourth Fastest Muon pT distribution'+particle[3], 'pT (Gev)', 'Candidates', 'black', 200 )
+
 
 # Histogram XX (All Muons in Acceptance)
 # all_muons_acc_pt = et.eta_acc_LApt(lep1, lep2, lep3, lep4)
