@@ -201,16 +201,103 @@ def mb_p_min(vec_darr, p_min):
             counter += 1
     return(counter/len(vec_darr[:,0]))
 
+def mb_pt_check1(vec_darr, pt_check):
+    '''
+    Will take in an array that has already passed the min bias it will check the lepton
+    with the highest pT passing a certain threshhold and keep them. Then it will check to
+    see if the muon with the second highest pT also passes that thresh hold and return pT ONLY narray 
+    where both the largest and second largeest pT muosn meet the threshold. sorted
+    '''
+    counter = 0
+    for i in range(len(vec_darr[:,0])):
+        pt_arr = np.array([])
+        pt_arr = np.array([vec_darr[i,0].pt, vec_darr[i,1].pt, vec_darr[i,2].pt, vec_darr[i,3].pt])
+        pt_arr_sort = np.sort(pt_arr)
+        if pt_arr_sort[3] > pt_check:
+            counter +=1
+            if counter == 1:
+                new_pt = np.array(pt_arr_sort)
+            else:
+                new_pt = np.vstack((new_pt,pt_arr_sort))
+    print("fraction is", counter/len(vec_darr[:,0]))
+    return(new_pt)
+
+def mb_pt_check12(vec_darr, pt_check):
+    '''
+    Will take in an array that has already passed the min bias it will check the lepton
+    with the highest pT passing a certain threshhold and keep them. Then it will check to
+    see if the muon with the second highest pT also passes that thresh hold and return pT ONLY narray 
+    where both the largest and second largeest pT muosn meet the threshold. sorted
+    '''
+    counter = 0
+    for i in range(len(vec_darr[:,0])):
+        pt_arr = np.array([])
+        pt_arr = np.array([vec_darr[i,0].pt, vec_darr[i,1].pt, vec_darr[i,2].pt, vec_darr[i,3].pt])
+        pt_arr_sort = np.sort(pt_arr)
+        if pt_arr_sort[3] > pt_check and pt_arr_sort[2] > pt_check:
+            counter +=1
+            if counter == 1:
+                new_pt = np.array(pt_arr_sort)
+            else:
+                new_pt = np.vstack((new_pt,pt_arr_sort))
+    print("fraction is", counter/len(vec_darr[:,0]))
+    return(new_pt)
+
+def mb_pt_check123(vec_darr, pt_check):
+    '''
+    Will take in an array that has already passed the min bias it will check the lepton
+    with the highest pT passing a certain threshhold and keep them. Then it will check to
+    see if the muon with the second highest pT also passes that thresh hold and return pT ONLY narray 
+    where both the largest and second largeest pT muosn meet the threshold. sorted
+    '''
+    counter = 0
+    for i in range(len(vec_darr[:,0])):
+        pt_arr = np.array([])
+        pt_arr = np.array([vec_darr[i,0].pt, vec_darr[i,1].pt, vec_darr[i,2].pt, vec_darr[i,3].pt])
+        pt_arr_sort = np.sort(pt_arr)
+        if pt_arr_sort[3] > pt_check and pt_arr_sort[2] > pt_check and pt_arr_sort[1] > pt_check:
+            counter +=1
+            if counter == 1:
+                new_pt = np.array(pt_arr_sort)
+            else:
+                new_pt = np.vstack((new_pt,pt_arr_sort))
+    print("fraction is", counter/len(vec_darr[:,0]))
+    return(new_pt)
+
+def mb_pt_check1234(vec_darr, pt_check):
+    '''
+    Will take in an array that has already passed the min bias it will check the lepton
+    with the highest pT passing a certain threshhold and keep them. Then it will check to
+    see if the muon with the second highest pT also passes that thresh hold and return pT ONLY narray 
+    where both the largest and second largeest pT muosn meet the threshold. sorted
+    '''
+    counter = 0
+    for i in range(len(vec_darr[:,0])):
+        pt_arr = np.array([])
+        pt_arr = np.array([vec_darr[i,0].pt, vec_darr[i,1].pt, vec_darr[i,2].pt, vec_darr[i,3].pt])
+        pt_arr_sort = np.sort(pt_arr)
+        if pt_arr_sort[3] > pt_check and pt_arr_sort[2] > pt_check and pt_arr_sort[1] > pt_check and pt_arr_sort[1] > pt_check:
+            counter +=1
+            if counter == 1:
+                new_pt = np.array(pt_arr_sort)
+            else:
+                new_pt = np.vstack((new_pt,pt_arr_sort))
+    print("fraction is", counter/len(vec_darr[:,0]))
+    return(new_pt)
+    
+
 #####
 #-------------------------------------------------------------------------------------
 #####
 def pT_nx4_min(arr1, low_pt):
-    '''takes in nx4 array that has already passed the min bias LHCb acceptance and checks that the tranverse'''
+    '''takes in nx4 array that has already passed the min bias LHCb acceptance and checks that the
+    pT of each muon passes this low_pt threshhold.
+    '''
     counter = 0
     for i in range(len(arr1[:,0])):
         if arr1[i,0] >= low_pt and arr1[i,1] >= low_pt and arr1[i,2] >= low_pt and arr1[i,3] >= low_pt:
             counter += 1
-    return((counter/len(arr1[:,0]))*100)
+    return((counter/len(arr1[:,0])))
 
 def inv_mass_recon_list(vec1, vec2, vec3, vec4):
     '''Put in 4 vector classes and recombines to find the invariant mass of those with daughts in hte LHCb acceptance. 
@@ -227,6 +314,7 @@ def inv_mass_recon_list(vec1, vec2, vec3, vec4):
             inv_mass = math.sqrt(abs(E2 - P2))
             inv_mass_list.append(inv_mass)
     return(inv_mass_list)
+
 
 def frac_mass_recon_check(arr1, arr2, arr3, arr4, low_mass, high_mass):
     ''' Take in 4 arrays and will reconstruct their masses and returns fraction of
@@ -248,7 +336,7 @@ def hist(list1, parent, savefig, title, xlabel, ylabel, color, bins):
     axs.grid(visible = True, color ='grey', 
         linestyle ='-.', linewidth = 0.5, 
         alpha = 0.6)
-    plt.hist(arr1, color=color, bins=bins)
+    plt.hist(arr1, color=color, bins=bins, histtype = 'step')
     axs.xaxis.set_tick_params(pad = 20) 
     axs.yaxis.set_tick_params(pad = 20)
     plt.axvline(arr1.mean(), color='k', linestyle='dashed', linewidth=1)
