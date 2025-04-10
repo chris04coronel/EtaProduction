@@ -57,11 +57,11 @@ def TwoDEtaAcc(vec1, vec2, vec3, vec4):
 
 def PDEtaAcc(par1, vec1, vec2, vec3, vec4):
     ''' This function serves to determine the total amount of decays where both the parent and the daughter particles 
-    are in the LHCb 2 < eta < 5 acceptance. Will return a number so set a varianel equal to this equation.
+    are in the LHCb 2 < eta < 5 acceptance. Will return a number so set a variable equal to this equation.
     '''
     counter = 0
     for i in range(len(par1)):
-        if par1[i].eta <=5 and par1[i].eta >=2 and vec1[i].eta <=5 and vec1[i].eta >=2 and vec2[i].eta <=5 and vec2[i].eta >=2 and vec3[i].eta <=5 and vec3[i].eta >=2 and vec4[i].eta <=5 and vec4[i].eta >=2:
+        if par1[i].eta <=5.298 and par1[i].eta >=1.596 and vec1[i].eta <=5.298 and vec1[i].eta >=1.596 and vec2[i].eta <=5.298 and vec2[i].eta >=1.596 and vec3[i].eta <=5.298 and vec3[i].eta >=1.596 and vec4[i].eta <=5.298 and vec4[i].eta >=1.596:
             counter +=1
     return(counter)
 
@@ -86,23 +86,26 @@ def eta_acc_LApt(vec1, vec2, vec3, vec4):
     print("My eta acc function took", time.time() - start_time, "seconds to run")
     return(vec_list_eta_acc_pt)
 
-def sort_pt(vec1, vec2, vec3, vec4):
-    'Take 4 four vectors and sorts them in a nx4. Where n is the length of the vectors (Assuming)'
-    'they are all the same length. the the 1st entry is the smallest pT in ascending order'
-    TwoDimArray = np.transpose([np.array(vec1.pt),np.array(vec2.pt),np.array(vec3.pt),np.array(vec4.pt)])
-    for i in range(len(TwoDimArray[:,1])):
+def mysort(vec1, vec2, vec3, vec4):
+    '''
+    Takes in a vector class specific attribute like pt, eta, p, e, etc and sort them from smallest to largest
+    '''
+    import vector
+    TwoDimArray = np.transpose([np.array(vec1),np.array(vec2),np.array(vec3),np.array(vec4)])
+    for i in range(len(TwoDimArray[:,0])):
         if i == 0:
             sort_ndarray = np.sort(TwoDimArray[i,:])
         else:
             sort_ndarray = np.vstack((sort_ndarray, np.sort(TwoDimArray[i,:])))
     return(sort_ndarray)
 
+
 def eta_acc_sort_pt(par1,vec1, vec2, vec3, vec4):
     'looks for all 4 muons and parent in LHCb acceptance and then sorts them by ascending muon pT returns nx4 array'
-    #start_time=time.time()
+    start_time=time.time()
     counter = 0
     for i in range(len(vec1)):
-        if vec1[i].eta >=2 and vec1[i].eta <= 5 and vec2[i].eta >=2 and vec2[i].eta <= 5 and vec3[i].eta >=2 and vec3[i].eta <=5 and vec4[i].eta >=2 and vec4[i].eta <= 5 and par1[i].eta <= 5 and par1[i].eta >=2:
+        if vec1[i].eta >=1.596 and vec1[i].eta <= 5.298 and vec2[i].eta >=1.596 and vec2[i].eta <= 5.298 and vec3[i].eta >=1.596 and vec3[i].eta <=5.298 and vec4[i].eta >=1.596 and vec4[i].eta <= 5.298 and par1[i].eta <= 5.298 and par1[i].eta >=1.596:
             if counter == 0:
                 counter += 1
                 arr1 =np.array([vec1[i].pt, vec2[i].pt, vec3[i].pt, vec4[i].pt])
@@ -110,8 +113,24 @@ def eta_acc_sort_pt(par1,vec1, vec2, vec3, vec4):
             else:
                 arr1 =np.array([vec1[i].pt, vec2[i].pt, vec3[i].pt, vec4[i].pt])
                 sort_arr1 = np.vstack((sort_arr1, np.sort(arr1)))
-    #print("My eta acc pT sorting function took", '{:.5f}'.format(time.time() - start_time), "seconds to run")
-    return(sort_arr1)    
+    print("My eta acc pT sorting function took", '{:.5f}'.format(time.time() - start_time), "seconds to run")
+    return(sort_arr1)
+
+def eta_acc_sort_p(par1,vec1, vec2, vec3, vec4):
+    'looks for all 4 muons and parent in LHCb acceptance and then sorts them by ascending muon pT returns nx4 array'
+    start_time=time.time()
+    counter = 0
+    for i in range(len(vec1)):
+        if vec1[i].eta >=2 and vec1[i].eta <= 5 and vec2[i].eta >=2 and vec2[i].eta <= 5 and vec3[i].eta >=2 and vec3[i].eta <=5 and vec4[i].eta >=2 and vec4[i].eta <= 5 and par1[i].eta <= 5 and par1[i].eta >=2:
+            if counter == 0:
+                counter += 1
+                arr1 =np.array([vec1[i].p, vec2[i].p, vec3[i].p, vec4[i].p])
+                sort_arr1 = np.sort(arr1)
+            else:
+                arr1 =np.array([vec1[i].p, vec2[i].p, vec3[i].p, vec4[i].p])
+                sort_arr1 = np.vstack((sort_arr1, np.sort(arr1)))
+    print("My eta acc pT sorting function took", '{:.5f}'.format(time.time() - start_time), "seconds to run")
+    return(sort_arr1) 
 
 def pT_check1(arr1, pt1):
     'takes in an nx1 dimensional array. Checks percentage'
@@ -158,22 +177,46 @@ def pT_min(arr1, arr2, arr3, arr4, low_pt):
 #####
 #-------------------------------------------------------------------------------------
 #####
-def min_bias_arr(par1, vec1, vec2, vec3, vec4):
-    '''Takes in 4 awkward array vectors that contain kinematics fir each variable. Then
+def LHCb_acc(par1, vec1, vec2, vec3, vec4): #use to be min_bias_arr
+    '''Takes in 4 awkward array vectors that contain kinematics for each variable. Then
     it will cycle through and delete elements where not all are within the LHCb acceptance
-    of 2 < eta <5. It will return a nX4 vector array.
+    of 1.596 < eta <5.298 It will return a nX4 vector array.
     '''
     nvec1 = np.array([])
     nvec2 = np.array([])
     nvec3 = np.array([])
     nvec4 = np.array([])
     for i in range(len(par1)):
-        if par1[i].eta > 2 and par1[i].eta < 5 and vec1[i].eta > 2 and vec1[i].eta < 5 and vec2[i].eta > 2 and vec2[i].eta < 5 and vec3[i].eta > 2 and vec3[i].eta < 5 and vec4[i].eta > 2 and vec4[i].eta < 5:
+        if par1[i].eta > 1.596 and par1[i].eta < 5.298 and vec1[i].eta > 1.596 and vec1[i].eta < 5.298 and vec2[i].eta > 1.596 and vec2[i].eta < 5.298 and vec3[i].eta > 1.596 and vec3[i].eta < 5.298 and vec4[i].eta > 1.596 and vec4[i].eta < 5.298:
             nvec1 = np.append(nvec1,vec1[i])
             nvec2 = np.append(nvec2,vec2[i])
             nvec3 = np.append(nvec3,vec3[i])
             nvec4 = np.append(nvec4,vec4[i])
     new_vec_array = np.transpose([nvec1, nvec2, nvec3, nvec4])
+    return(new_vec_array)
+
+def min_bias_arr2(par1, vec1, vec2, vec3, vec4):
+    '''Takes in 4 awkward array vectors that contain kinematics fir each variable. Then
+    it will cycle through and delete elements where not all are within the LHCb acceptance
+    of 2 < eta <5. It will return a nX4 vector array.
+    '''
+    import vector
+    count = 0
+    for i in range(len(par1)):
+        if par1[i-count].eta > 1.596 and par1[i-count].eta < 5.298 and vec1[i-count].eta > 1.5962 and vec1[i-count].eta < 5.298 and vec2[i-count].eta > 1.596 and vec2[i-count].eta < 5.298 and vec3[i-count].eta > 1.596 and vec3[i-count].eta < 5.298 and vec4[i-count].eta > 1.596 and vec4[i-count].eta < 5.298:
+            print('the index is', i)
+            print('par eta is', par1[i-count].eta)
+            print('lep1 eta is ', vec1[i-count].eta)
+            print('lep2 eta is ', vec2[i-count].eta)
+            print('lep3 eta is ', vec3[i-count].eta)
+            print('lep4 eta is ', vec4[i-count].eta)
+
+            vec1 = np.delete(vec1, i-count)
+            vec2 = np.delete(vec2, i-count)
+            vec3 = np.delete(vec3, i-count)
+            vec4 = np.delete(vec4, i-count)
+            count +=1
+    new_vec_array = np.transpose([vec1, vec2, vec3, vec4])
     return(new_vec_array)
 
 def pt_p_min(vec_darr,min_pt, min_p ):
@@ -201,28 +244,19 @@ def mb_p_min(vec_darr, p_min):
             counter += 1
     return(counter/len(vec_darr[:,0]))
 
-def mb_pt_check1(vec_darr, pt_check):
-    '''
-    Will take in an array that has already passed the min bias it will check the lepton
-    with the highest pT passing a certain threshhold and keep them. Then it will check to
-    see if the muon with the second highest pT also passes that thresh hold and return pT ONLY narray 
-    where both the largest and second largeest pT muosn meet the threshold. sorted
-    '''
-    counter = 0
-    for i in range(len(vec_darr[:,0])):
-        pt_arr = np.array([])
-        pt_arr = np.array([vec_darr[i,0].pt, vec_darr[i,1].pt, vec_darr[i,2].pt, vec_darr[i,3].pt])
-        pt_arr_sort = np.sort(pt_arr)
-        if pt_arr_sort[3] > pt_check:
-            counter +=1
-            if counter == 1:
-                new_pt = np.array(pt_arr_sort)
-            else:
-                new_pt = np.vstack((new_pt,pt_arr_sort))
-    print("fraction is", counter/len(vec_darr[:,0]))
-    return(new_pt)
+def sort_pt(narr1):
+    'Take 4 four vectors and sorts them in a nx4. Where n is the length of the vectors (Assuming)'
+    'they are all the same length. the the 1st entry is the smallest pT in ascending order'
+    for i in range(len(narr1[:,0])):
+        if i == 0:
+            arr1 = np.array([narr1[i,0].pt, narr1[i,1].pt, narr1[i,2].pt, narr1[i,3].pt])
+            sort_arr1 = np.sort(arr1)
+        else:
+            arr1 = np.array([narr1[i,0].pt, narr1[i,1].pt, narr1[i,2].pt, narr1[i,3].pt])
+            sort_arr1 = np.vstack((sort_arr1, np.sort(arr1)))
+    return(sort_arr1)
 
-def mb_pt_check12(vec_darr, pt_check):
+def mb_pt_check1(vec_darr, pt_cut1):
     '''
     Will take in an array that has already passed the min bias it will check the lepton
     with the highest pT passing a certain threshhold and keep them. Then it will check to
@@ -231,19 +265,16 @@ def mb_pt_check12(vec_darr, pt_check):
     '''
     counter = 0
     for i in range(len(vec_darr[:,0])):
-        pt_arr = np.array([])
-        pt_arr = np.array([vec_darr[i,0].pt, vec_darr[i,1].pt, vec_darr[i,2].pt, vec_darr[i,3].pt])
-        pt_arr_sort = np.sort(pt_arr)
-        if pt_arr_sort[3] > pt_check and pt_arr_sort[2] > pt_check:
+        if vec_darr[i,3] > pt_cut1:
             counter +=1
             if counter == 1:
-                new_pt = np.array(pt_arr_sort)
+                new_pt_arr = np.array([vec_darr[i,0], vec_darr[i,1], vec_darr[i,2], vec_darr[i,3]])
             else:
-                new_pt = np.vstack((new_pt,pt_arr_sort))
-    print("fraction is", counter/len(vec_darr[:,0]))
-    return(new_pt)
+                new_pt_arr = np.vstack((new_pt_arr,np.array([vec_darr[i,0], vec_darr[i,1], vec_darr[i,2], vec_darr[i,3]])))
+    print("Fraction is", counter/len(vec_darr[:,0]))
+    return(new_pt_arr)
 
-def mb_pt_check123(vec_darr, pt_check):
+def mb_pt_check12(vec_darr, pt_cut1, pt_cut2):
     '''
     Will take in an array that has already passed the min bias it will check the lepton
     with the highest pT passing a certain threshhold and keep them. Then it will check to
@@ -252,19 +283,16 @@ def mb_pt_check123(vec_darr, pt_check):
     '''
     counter = 0
     for i in range(len(vec_darr[:,0])):
-        pt_arr = np.array([])
-        pt_arr = np.array([vec_darr[i,0].pt, vec_darr[i,1].pt, vec_darr[i,2].pt, vec_darr[i,3].pt])
-        pt_arr_sort = np.sort(pt_arr)
-        if pt_arr_sort[3] > pt_check and pt_arr_sort[2] > pt_check and pt_arr_sort[1] > pt_check:
+        if vec_darr[i,3] > pt_cut1 and vec_darr[i,2] > pt_cut2:
             counter +=1
             if counter == 1:
-                new_pt = np.array(pt_arr_sort)
+                new_pt_arr = np.array([vec_darr[i,0], vec_darr[i,1], vec_darr[i,2], vec_darr[i,3]])
             else:
-                new_pt = np.vstack((new_pt,pt_arr_sort))
-    print("fraction is", counter/len(vec_darr[:,0]))
-    return(new_pt)
+                new_pt_arr = np.vstack((new_pt_arr,np.array([vec_darr[i,0], vec_darr[i,1], vec_darr[i,2], vec_darr[i,3]])))
+    print("Fraction is", counter/len(vec_darr[:,0]))
+    return(new_pt_arr)
 
-def mb_pt_check1234(vec_darr, pt_check):
+def mb_pt_check123(vec_darr, pt_cut1, pt_cut2):
     '''
     Will take in an array that has already passed the min bias it will check the lepton
     with the highest pT passing a certain threshhold and keep them. Then it will check to
@@ -273,17 +301,33 @@ def mb_pt_check1234(vec_darr, pt_check):
     '''
     counter = 0
     for i in range(len(vec_darr[:,0])):
-        pt_arr = np.array([])
-        pt_arr = np.array([vec_darr[i,0].pt, vec_darr[i,1].pt, vec_darr[i,2].pt, vec_darr[i,3].pt])
-        pt_arr_sort = np.sort(pt_arr)
-        if pt_arr_sort[3] > pt_check and pt_arr_sort[2] > pt_check and pt_arr_sort[1] > pt_check and pt_arr_sort[1] > pt_check:
+        if vec_darr[i,3] > pt_cut1 and vec_darr[i,2] > pt_cut2 and vec_darr[i,1] > pt_cut2:
             counter +=1
             if counter == 1:
-                new_pt = np.array(pt_arr_sort)
+                new_pt_arr = np.array([vec_darr[i,0], vec_darr[i,1], vec_darr[i,2], vec_darr[i,3]])
             else:
-                new_pt = np.vstack((new_pt,pt_arr_sort))
-    print("fraction is", counter/len(vec_darr[:,0]))
-    return(new_pt)
+                new_pt_arr = np.vstack((new_pt_arr,np.array([vec_darr[i,0], vec_darr[i,1], vec_darr[i,2], vec_darr[i,3]])))
+    print("Fraction is", counter/len(vec_darr[:,0]))
+    return(new_pt_arr)
+
+def mb_pt_check1234(vec_darr, pt_cut1, pt_cut2):
+    '''
+    Neeeds to already be sorted
+    Will take in an array that has already passed the min bias it will check the lepton
+    with the highest pT passing a certain threshhold and keep them. Then it will check to
+    see if the muon with the second highest pT also passes that thresh hold and return pT ONLY narray 
+    where both the largest and second largeest pT muosn meet the threshold. sorted
+    '''
+    counter = 0
+    for i in range(len(vec_darr[:,0])):
+        if vec_darr[i,3] > pt_cut1 and vec_darr[i,2] > pt_cut2 and vec_darr[i,1] > pt_cut2 and vec_darr[i,0] > pt_cut2:
+            counter +=1
+            if counter == 1:
+                new_pt_arr = np.array([vec_darr[i,0], vec_darr[i,1], vec_darr[i,2], vec_darr[i,3]])
+            else:
+                new_pt_arr = np.vstack((new_pt_arr,np.array([vec_darr[i,0], vec_darr[i,1], vec_darr[i,2], vec_darr[i,3]])))
+    print("Fraction is", counter/len(vec_darr[:,0]))
+    return(new_pt_arr)
     
 
 #####
@@ -299,12 +343,12 @@ def pT_nx4_min(arr1, low_pt):
             counter += 1
     return((counter/len(arr1[:,0])))
 
-def inv_mass_recon_list(vec1, vec2, vec3, vec4):
+def inv_mass_recon_list(par_vec, vec1, vec2, vec3, vec4):
     '''Put in 4 vector classes and recombines to find the invariant mass of those with daughts in hte LHCb acceptance. 
     '''
     inv_mass_list = []
     for i in range(len(vec1)):
-        if vec1[i].eta >=2 and vec1[i].eta <= 5 and vec2[i].eta >=2 and vec2[i].eta <= 5 and vec3[i].eta >=2 and vec3[i].eta <=5 and vec4[i].eta >=2 and vec4[i].eta <= 5:
+        if par_vec[i].eta >=1.596 and par_vec[i].eta <=5.298 and vec1[i].eta >= 1.596 and vec1[i].eta <= 5.298 and vec2[i].eta >=1.596 and vec2[i].eta <= 5.298 and vec3[i].eta >=1.596 and vec3[i].eta <=5.298 and vec4[i].eta >=1.596 and vec4[i].eta <= 5.298:
             E = vec1[i].e + vec2[i].e + vec3[i].e + vec4[i].e
             px = vec1[i].px + vec2[i].px + vec3[i].px + vec4[i].px
             py = vec1[i].py + vec2[i].py + vec3[i].py + vec4[i].py 
@@ -328,7 +372,7 @@ def frac_mass_recon_check(arr1, arr2, arr3, arr4, low_mass, high_mass):
             counter +=1
     return(counter/len(list1))
 
-def hist(list1, parent, savefig, title, xlabel, ylabel, color, bins):
+def hist(list1, parent, savefig, title, xlabel, ylabel, color, bins, label):
     arr1=np.array(list1)
     fig, axs = plt.subplots(1, 1,
                         figsize =(10, 7), 
@@ -343,10 +387,64 @@ def hist(list1, parent, savefig, title, xlabel, ylabel, color, bins):
     min_ylim, max_ylim = plt.ylim()
     plt.text(arr1.mean()*1.1, max_ylim*0.9, 'Mean: {:.3f}'.format(arr1.mean()))
     plt.yscale('log')
+    plt.legend([label],loc='upper center')
     plt.title(title)
     plt.xlabel(xlabel)
     plt.ylabel(ylabel)
     plt.savefig('Histograms/' + parent +'/' + savefig)
+
+def hist_weight(list1, parent, savefig, title, xlabel, ylabel, color, bins, label, weights1):
+    weights2 = np.full(len(list1), weights1)
+    arr1=np.array(list1)
+    fig, axs = plt.subplots(1, 1,
+                        figsize =(10, 7), 
+                        tight_layout = True)
+    axs.grid(visible = True, color ='grey', 
+        linestyle ='-.', linewidth = 0.5, 
+        alpha = 0.6)
+    counts,bins, _ = plt.hist(arr1, color=color, bins=bins, histtype = 'step', weights=weights2)   
+    bin_widths = np.diff(bins)
+    integral = np.sum(counts * bin_widths)
+
+    axs.xaxis.set_tick_params(pad = 20) 
+    axs.yaxis.set_tick_params(pad = 20)
+    # Plot the mean
+    plt.axvline(arr1.mean(), color='k', linestyle='dashed', linewidth=1)
+    min_ylim, max_ylim = plt.ylim()
+    plt.text(arr1.mean()*1.1, max_ylim*0.9, 'Mean: {:.3f}'.format(arr1.mean()))
+    #plt.yscale('log')
+
+    plt.legend([label],loc='upper center')
+    plt.title(title + '\nHistogram with Integral = {:.2f}'.format(integral))
+    plt.xlabel(xlabel)
+    plt.ylabel(ylabel)
+    plt.savefig('Histograms/' + parent +'/' + savefig)
+
+def hist_weight_mass_curve(list1, parent, savefig, title1, color1, bins1, range1, weights1):
+    weights2 = np.full(len(list1), weights1)
+    arr1 = np.array(list1)
+    fig, axs = plt.subplots(1, 1,
+                        figsize =(10, 7))#, 
+                        #tight_layout = True)
+    axs.grid(visible = True, color ='grey', 
+        linestyle ='-.', linewidth = 0.5, 
+        alpha = 0.6)
+    counts, bins, _ = plt.hist(arr1, color=color1, bins=bins1, alpha=0.65, range =range1, histtype = 'step', weights = weights2)
+    bin_widths = np.diff(bins)
+    integral = np.sum(counts * bin_widths)
+
+    axs.xaxis.set_tick_params(pad = 5) 
+    axs.yaxis.set_tick_params(pad = 5)
+
+    # plt.axvline(arr1.mean(), color='k', linestyle='dashed', linewidth=1)
+    # min_ylim, max_ylim = plt.ylim()
+    # plt.text(arr1.mean()*1.0001, max_ylim*0.9, 'Mass Mean: {:.3f}'.format(arr1.mean()))
+    # plt.yscale('log')
+    axs.legend(['Run 3'], loc= 'center right') #title="Hello"
+    plt.title(title1 + '\nHistogram with Integral = {:.2f}'.format(integral))
+    plt.xlabel('m($\mu^+$$\mu^-$$\mu^+$$\mu^-$) [MeV/C^2]')
+    plt.ylabel('Number of Candidates')
+    plt.savefig('Histograms/'+ parent +'/' + savefig)
 
 def hist_mass_curve(list1, parent, savefig, title1, color1, bins1):
     arr1 = np.array(list1)
