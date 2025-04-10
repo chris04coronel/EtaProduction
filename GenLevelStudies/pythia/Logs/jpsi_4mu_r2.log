@@ -8,7 +8,7 @@
  |  |   P  P   Y Y     T    H   H   I    A A     This is PYTHIA version 8.311      |  | 
  |  |   PPP     Y      T    HHHHH   I   AAAAA    Last date of change:  8 Mar 2024  |  | 
  |  |   P       Y      T    H   H   I   A   A                                      |  | 
- |  |   P       Y      T    H   H  III  A   A    Now is 04 Mar 2025 at 20:54:30    |  | 
+ |  |   P       Y      T    H   H  III  A   A    Now is 12 Mar 2025 at 16:15:21    |  | 
  |  |                                                                              |  | 
  |  |   Program documentation and an archive of historic versions is found on:     |  | 
  |  |                                                                              |  | 
@@ -233,44 +233,43 @@
  |    pT0 =  1.14 gives sigmaInteraction =     6.29 mb: rejected    | 
  |    pT0 =  1.02 gives sigmaInteraction =     7.26 mb: rejected    | 
  |    pT0 =  0.92 gives sigmaInteraction =     8.39 mb: rejected    | 
- |    pT0 =  0.83 gives sigmaInteraction =     9.46 mb: rejected    | 
- |    pT0 =  0.75 gives sigmaInteraction =    10.99 mb: rejected    | 
- |    pT0 =  0.67 gives sigmaInteraction =    12.73 mb: accepted    | 
+ |    pT0 =  0.83 gives sigmaInteraction =     9.45 mb: rejected    | 
+ |    pT0 =  0.75 gives sigmaInteraction =    11.01 mb: accepted    | 
  |   diffractive mass = 1.92e+03 GeV and sigmaNorm =    10.00 mb    | 
- |    pT0 =  1.73 gives sigmaInteraction =     4.61 mb: rejected    | 
- |    pT0 =  1.55 gives sigmaInteraction =     5.44 mb: rejected    | 
- |    pT0 =  1.40 gives sigmaInteraction =     6.29 mb: rejected    | 
- |    pT0 =  1.26 gives sigmaInteraction =     7.20 mb: rejected    | 
- |    pT0 =  1.13 gives sigmaInteraction =     8.24 mb: rejected    | 
- |    pT0 =  1.02 gives sigmaInteraction =     9.31 mb: rejected    | 
- |    pT0 =  0.92 gives sigmaInteraction =    10.46 mb: rejected    | 
- |    pT0 =  0.83 gives sigmaInteraction =    11.82 mb: accepted    | 
+ |    pT0 =  1.73 gives sigmaInteraction =     4.66 mb: rejected    | 
+ |    pT0 =  1.55 gives sigmaInteraction =     5.39 mb: rejected    | 
+ |    pT0 =  1.40 gives sigmaInteraction =     6.33 mb: rejected    | 
+ |    pT0 =  1.26 gives sigmaInteraction =     7.18 mb: rejected    | 
+ |    pT0 =  1.13 gives sigmaInteraction =     8.19 mb: rejected    | 
+ |    pT0 =  1.02 gives sigmaInteraction =     9.36 mb: rejected    | 
+ |    pT0 =  0.92 gives sigmaInteraction =    10.42 mb: rejected    | 
+ |    pT0 =  0.83 gives sigmaInteraction =    11.79 mb: accepted    | 
  |   diffractive mass = 3.10e+03 GeV and sigmaNorm =    10.00 mb    | 
  |    pT0 =  1.91 gives sigmaInteraction =     5.29 mb: rejected    | 
- |    pT0 =  1.72 gives sigmaInteraction =     6.21 mb: rejected    | 
- |    pT0 =  1.55 gives sigmaInteraction =     7.18 mb: rejected    | 
- |    pT0 =  1.39 gives sigmaInteraction =     8.23 mb: rejected    | 
- |    pT0 =  1.26 gives sigmaInteraction =     9.37 mb: rejected    | 
- |    pT0 =  1.13 gives sigmaInteraction =    10.57 mb: rejected    | 
- |    pT0 =  1.02 gives sigmaInteraction =    11.81 mb: accepted    | 
+ |    pT0 =  1.72 gives sigmaInteraction =     6.17 mb: rejected    | 
+ |    pT0 =  1.55 gives sigmaInteraction =     7.10 mb: rejected    | 
+ |    pT0 =  1.39 gives sigmaInteraction =     8.17 mb: rejected    | 
+ |    pT0 =  1.26 gives sigmaInteraction =     9.38 mb: rejected    | 
+ |    pT0 =  1.13 gives sigmaInteraction =    10.56 mb: rejected    | 
+ |    pT0 =  1.02 gives sigmaInteraction =    11.85 mb: accepted    | 
  |   diffractive mass = 5.00e+03 GeV and sigmaNorm =    10.00 mb    | 
- |    pT0 =  2.12 gives sigmaInteraction =     5.93 mb: rejected    | 
- |    pT0 =  1.91 gives sigmaInteraction =     6.92 mb: rejected    | 
- |    pT0 =  1.72 gives sigmaInteraction =     8.13 mb: rejected    | 
- |    pT0 =  1.55 gives sigmaInteraction =     9.25 mb: rejected    | 
- |    pT0 =  1.39 gives sigmaInteraction =    10.71 mb: rejected    | 
- |    pT0 =  1.25 gives sigmaInteraction =    11.85 mb: accepted    | 
+ |    pT0 =  2.12 gives sigmaInteraction =     5.99 mb: rejected    | 
+ |    pT0 =  1.91 gives sigmaInteraction =     6.99 mb: rejected    | 
+ |    pT0 =  1.72 gives sigmaInteraction =     8.18 mb: rejected    | 
+ |    pT0 =  1.55 gives sigmaInteraction =     9.31 mb: rejected    | 
+ |    pT0 =  1.39 gives sigmaInteraction =    10.67 mb: rejected    | 
+ |    pT0 =  1.25 gives sigmaInteraction =    12.09 mb: accepted    | 
  |   diffractive mass = 8.06e+03 GeV and sigmaNorm =    10.00 mb    | 
- |    pT0 =  2.35 gives sigmaInteraction =     6.57 mb: rejected    | 
- |    pT0 =  2.12 gives sigmaInteraction =     7.67 mb: rejected    | 
- |    pT0 =  1.90 gives sigmaInteraction =     9.02 mb: rejected    | 
- |    pT0 =  1.71 gives sigmaInteraction =    10.38 mb: rejected    | 
- |    pT0 =  1.54 gives sigmaInteraction =    11.96 mb: accepted    | 
+ |    pT0 =  2.35 gives sigmaInteraction =     6.69 mb: rejected    | 
+ |    pT0 =  2.12 gives sigmaInteraction =     7.69 mb: rejected    | 
+ |    pT0 =  1.90 gives sigmaInteraction =     8.94 mb: rejected    | 
+ |    pT0 =  1.71 gives sigmaInteraction =    10.35 mb: rejected    | 
+ |    pT0 =  1.54 gives sigmaInteraction =    11.85 mb: accepted    | 
  |   diffractive mass = 1.30e+04 GeV and sigmaNorm =    10.00 mb    | 
- |    pT0 =  2.60 gives sigmaInteraction =     7.21 mb: rejected    | 
- |    pT0 =  2.34 gives sigmaInteraction =     8.45 mb: rejected    | 
- |    pT0 =  2.11 gives sigmaInteraction =     9.93 mb: rejected    | 
- |    pT0 =  1.90 gives sigmaInteraction =    11.58 mb: accepted    | 
+ |    pT0 =  2.60 gives sigmaInteraction =     7.25 mb: rejected    | 
+ |    pT0 =  2.34 gives sigmaInteraction =     8.37 mb: rejected    | 
+ |    pT0 =  2.11 gives sigmaInteraction =     9.91 mb: rejected    | 
+ |    pT0 =  1.90 gives sigmaInteraction =    11.44 mb: accepted    | 
  |                                                                  | 
  *-------  End PYTHIA Multiparton Interactions Initialization  -----* 
 
@@ -290,63 +289,100 @@
       id   name            antiName         spn chg col      m0        mWidth      mMin       mMax       tau0    res dec ext vis wid
              no onMode   bRatio   meMode     products 
 
-     331  eta'                                1   0   0    0.95778    0.00020    0.95578    0.95978  0.00000e+00   0   1   0   1   0
-              0     0   0.4365815    0      211     -211      221 
-              1     0   0.2947428    0      113       22 
-              2     0   0.2172848    0      111      111      221 
-              3     0   0.0276636    0      223       22 
-              4     0   0.0219297    0       22       22 
-              5     0   0.0016900    0      111      111      111 
-              6     0   0.0001076    0       13      -13       22 
-              7     1   1.0000000   13       13      -13       13      -13 
+     443  J/psi                               3   0   0    3.09692    0.00009    3.09602    3.09782  0.00000e+00   0   1   0   1   0
+              0     0   0.8023950   43       83      -83 
+              1     0   0.0594000    0       11      -11 
+              2     0   0.0593000    0       13      -13 
+              3     0   0.0130000    0      441       22 
+              4     0   0.0056000    0      113      111 
+              5     0   0.0056500    0      213     -211 
+              6     0   0.0056500    0     -213      211 
+              7     0   0.0036000    0      115      113 
+              8     0   0.0036000    0     -215      213 
+              9     0   0.0036000    0      215     -213 
+             10     0   0.0043000    0      225      223 
+             11     0   0.0022000    0      313     -315 
+             12     0   0.0022000    0      323     -325 
+             13     0   0.0022000    0     -323      325 
+             14     0   0.0025000    0      321     -323 
+             15     0   0.0025000    0     -321      323 
+             16     0   0.0021000    0      311     -313 
+             17     0   0.0021000    0     -311      313 
+             18     0   0.0019000    0    20323     -321 
+             19     0   0.0019000    0   -20323      321 
+             20     0   0.0015000    0    10213     -211 
+             21     0   0.0015000    0   -10213      211 
+             22     0   0.0023000    0    10113      111 
+             23     0   0.0004800    0    10331      223 
+             24     0   0.0007400    0      223      221 
+             25     0   0.0003600    0    10331      333 
+             26     0   0.0008000    0      333      335 
+             27     0   0.0006800    0    20333      223 
+             28     0   0.0007400    0      333      221 
+             29     0   0.0004500    0      223      111 
+             30     0   0.0004000    0      333      331 
+             31     0   0.0003200    0      333  9010221 
+             32     0   0.0002600    0      333    20223 
+             33     0   0.0001930    0      113      221 
+             34     0   0.0001820    0      223      331 
+             35     0   0.0001400    0      223  9010221 
+             36     0   0.0001050    0      113      331 
+             37     0   0.0011000    0     2224    -2224 
+             38     0   0.0005150    0     3112    -3112 
+             39     0   0.0005900    0     3314    -3314 
+             40     0   0.0003200    0     3324    -3324 
+             41     0   0.0003200    0     3324    -3324 
+             42     0   0.0001550    0     3114    -3114 
+             43     0   0.0001550    0     3224    -3224 
+             44     1   1.0000000   13       13      -13       13      -13 
 
  --------  End PYTHIA Particle Data Table  -----------------------------------------------------------------------------------------
 
-EtaPrime Run 2 Statistics
+JPsi Run 2 Statistics
 
 The total number of events is 100000
-The total number of decays is 46608
-The total number of decays where daughter are in acceptance 5775
-The total number of decays where both the daughter and the eta particle are in acceptance is 5292
-The average number of decays with daughters in acceptance per event is 0.05775
-The average number of decays with parent and daughters in acceptance per event is 0.05292
-My eta acc pT sorting function took 67.66747 seconds to run
+The total number of JPsi decay to 4 muons is 132
+The total number of decays where all daughters are in LHCb acceptance 18
+The total number of decays where both the daughters and the parent particle are in LHCb acceptance is 16
+The average number of decays with parent and daughters in acceptance per event is 0.00016
 
-The fraction of min bias decays where all muons are above 0.65 GeV pT threshold is 0.756 %
-
-Muon pT in acc information. Children of EtaPrime parent particle
+Muon pT in acc information. Children of JPsi parent particle
 ╒═══╤═══════════════╤══════════╤══════════╤══════════╤══════════╕
 │ 0 │ -             │ 1st Muon │ 2nd Muon │ 3rd Muon │ 4th Muon │
 ├───┼───────────────┼──────────┼──────────┼──────────┼──────────┤
-│ 1 │ Highest (GeV) │ 7.49574  │ 7.49574  │ 4.99133  │ 2.83771  │
+│ 1 │ Highest (GeV) │ 5.33321  │ 3.50577  │ 2.85303  │ 1.15811  │
 ├───┼───────────────┼──────────┼──────────┼──────────┼──────────┤
-│ 2 │ Lowest  (GeV) │ 0.06999  │ 0.02339  │ 0.00719  │ 0.00545  │
+│ 2 │ Lowest  (GeV) │ 0.93830  │ 0.47751  │ 0.40990  │ 0.15582  │
 ├───┼───────────────┼──────────┼──────────┼──────────┼──────────┤
-│ 3 │ Average (GeV) │ 0.54971  │ 0.38612  │ 0.23790  │ 0.15449  │
+│ 3 │ Average (GeV) │ 1.81479  │ 0.93560  │ 0.66633  │ 0.40973  │
 ╘═══╧═══════════════╧══════════╧══════════╧══════════╧══════════╛
 
 Prompt 1 
- Statistics for EtaPrime daughter particles in acc meeting prompt 1 J/Psi-->4mu conditions.
-╒═══╤══════════════════════╤══════════╤══════════╤══════════╤══════════╤═════════╕
-│ 0 │ -                    │ 1st Muon │ 2nd Muon │ 3rd Muon │ 4th Muon │ Percent │
-├───┼──────────────────────┼──────────┼──────────┼──────────┼──────────┼─────────┤
-│ 1 │ All Muons pT >0.5GeV │ x        │ x        │ x        │ x        │ 2.15    │
-╘═══╧══════════════════════╧══════════╧══════════╧══════════╧══════════╧═════════╛
+ Statistics for JPsi daughter particles in acc meeting prompt 1 J/Psi-->4mu conditions (pt > 0.5 GeV and p > 10 GeV).
+╒═══╤═══════════════════════════════════════╤══════════╤══════════╤══════════╤══════════╤══════════╕
+│ 0 │ -                                     │ 1st Muon │ 2nd Muon │ 3rd Muon │ 4th Muon │ Fraction │
+├───┼───────────────────────────────────────┼──────────┼──────────┼──────────┼──────────┼──────────┤
+│ 1 │ All Muons pT > 0.5 GeV                │ x        │ x        │ x        │ x        │ 0.1875   │
+├───┼───────────────────────────────────────┼──────────┼──────────┼──────────┼──────────┼──────────┤
+│ 2 │ All Muons p > 10 GeV                  │ x        │ x        │ x        │ x        │ 0.0625   │
+├───┼───────────────────────────────────────┼──────────┼──────────┼──────────┼──────────┼──────────┤
+│ 3 │ All Muons pT > 0.5 GeV and p > 10 GeV │ x        │ x        │ x        │ x        │ 0.0625   │
+╘═══╧═══════════════════════════════════════╧══════════╧══════════╧══════════╧══════════╧══════════╛
 
 Prompt 2 
- Statistics for EtaPrime daughter particles in acc meeting prompt 2 J/Psi-->4mu conditions.
+ Statistics for JPsi daughter particles in acc meeting prompt 2 J/Psi-->4mu conditions.
 ╒═══╤═════════════════════════════╤══════════╤══════════╤══════════╤══════════╤═════════╕
 │ 0 │ -                           │ 1st Muon │ 2nd Muon │ 3rd Muon │ 4th Muon │ Percent │
 ├───┼─────────────────────────────┼──────────┼──────────┼──────────┼──────────┼─────────┤
-│ 1 │ pT > 0.50GeV and pT >0.3GeV │ x        │ x        │ -        │ -        │ 30.12   │
+│ 1 │ pT > 0.50GeV and pT >0.3GeV │ x        │ x        │ -        │ -        │ 100.00  │
 ├───┼─────────────────────────────┼──────────┼──────────┼──────────┼──────────┼─────────┤
-│ 2 │ pT > 0.50GeV and pT >0.3GeV │ x        │ -        │ x        │ -        │ 16.91   │
+│ 2 │ pT > 0.50GeV and pT >0.3GeV │ x        │ -        │ x        │ -        │ 100.00  │
 ├───┼─────────────────────────────┼──────────┼──────────┼──────────┼──────────┼─────────┤
-│ 3 │ pT > 0.50GeV and pT >0.3GeV │ x        │ -        │ -        │ x        │ 7.88    │
+│ 3 │ pT > 0.50GeV and pT >0.3GeV │ x        │ -        │ -        │ x        │ 62.50   │
 ├───┼─────────────────────────────┼──────────┼──────────┼──────────┼──────────┼─────────┤
-│ 4 │ pT > 0.50GeV and pT >0.3GeV │ -        │ x        │ x        │ -        │ 12.00   │
+│ 4 │ pT > 0.50GeV and pT >0.3GeV │ -        │ x        │ x        │ -        │ 93.75   │
 ├───┼─────────────────────────────┼──────────┼──────────┼──────────┼──────────┼─────────┤
-│ 5 │ pT > 0.50GeV and pT >0.3GeV │ -        │ x        │ -        │ x        │ 6.16    │
+│ 5 │ pT > 0.50GeV and pT >0.3GeV │ -        │ x        │ -        │ x        │ 62.50   │
 ├───┼─────────────────────────────┼──────────┼──────────┼──────────┼──────────┼─────────┤
-│ 6 │ pT > 0.50GeV and pT >0.3GeV │ -        │ -        │ x        │ x        │ 4.35    │
+│ 6 │ pT > 0.50GeV and pT >0.3GeV │ -        │ -        │ x        │ x        │ 43.75   │
 ╘═══╧═════════════════════════════╧══════════╧══════════╧══════════╧══════════╧═════════╛
